@@ -265,7 +265,7 @@ final class OnboardingCoordinator: ObservableObject {
 
     var onboardingTranscriptionProviderOptions: [any CloudProvider] {
         let preferredOrder = [
-            "AssemblyAI", "Cartesia", "Deepgram", "ElevenLabs", "Soniox",
+            "OpenAI", "AssemblyAI", "Cartesia", "Deepgram", "ElevenLabs", "Soniox",
             "Speechmatics", "xAI", "Mistral", "Groq", "Gemini",
         ]
 

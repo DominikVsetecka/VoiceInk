@@ -13,8 +13,11 @@
 - Upstream `main` ist als lokaler Ausgangsstand ausgecheckt.
 - `upstream` und `origin` sind konfiguriert.
 - Branch `custom/live_streaming` ist von `upstream/main` abgezweigt.
-- `VoiceInk/Custom/Configuration/CustomFeatureConfiguration.swift` ist mit
-  deaktivierten Schaltern angelegt.
+- `VoiceInk/Custom/Configuration/CustomFeatureConfiguration.swift` enthält
+  zentrale Schalter; OpenAI Whisper v1 ist aktiviert, Live-Streaming bleibt
+  deaktiviert.
+- OpenAI Whisper v1 ist als eigener CloudProvider unter `VoiceInk/Custom/`
+  integriert.
 - Der lokale Apple-Silicon-Build funktioniert mit `make local` und kopiert die
   signierte App nach `~/Downloads/VoiceInk.app`.
 
@@ -22,7 +25,7 @@
 
 - Die App muss noch manuell gestartet und hinsichtlich Mikrofon-, Audio- und
   Berechtigungsverhalten abgenommen werden.
-- Erster eigener Streaming-Provider ist ausdrücklich nicht Teil dieses Blocks.
+- Eigener Streaming-Provider ist ausdrücklich nicht Teil dieses Blocks.
 
 ### Blocked
 
@@ -31,7 +34,7 @@
 ## Last verified
 
 - Date: 2026-08-29
-- Commit: pending (`Make local Apple-Silicon build reproducible`)
+- Commit: `Add OpenAI Whisper cloud provider`
 - Branch: `custom/live_streaming`
 - Environment: local Apple-Silicon macOS, Xcode 26.6, Swift 6.3.3
 - Automated: `make check` passed; `make local` passed; App-Bundle erzeugt und

@@ -24,6 +24,8 @@ Abnahme. Im ersten Setup wurden keine Laufzeitfeatures verändert.
 - End-to-end tests: not configured
 - Build: `make build`
 - Local Apple-Silicon build: `make local`
+- OpenAI Whisper v1: configure an OpenAI API key, select `OpenAI / Whisper v1`,
+  record a short sample, stop recording, and verify the returned transcript.
 - Fast check: `make check`
 - Full check: `./scripts/check`
 
@@ -66,7 +68,16 @@ kompilieren.
 - Expected: Upstream-App kompiliert ohne Custom-Laufzeitänderung
 - Evidence: Xcodebuild-Log
 
-### Scenario 2 — Existing behavior remains the default
+### Scenario 2 — OpenAI Whisper v1 cloud transcription
+
+- Environment: gebaute macOS-App mit OpenAI API-Key und aktivierter Abrechnung
+- Given: `OpenAI / Whisper v1` ausgewählt
+- When: kurze Aufnahme starten und anschließend stoppen
+- Expected: Die Aufnahme wird nach dem Stoppen über OpenAI transkribiert; es
+  gibt keine Live-Partial-Transkription.
+- Evidence: Transkript und ggf. Fehlermeldung prüfen
+
+### Scenario 3 — Existing behavior remains the default
 
 - Environment: gebaute macOS-App
 - Given: `CustomFeatureConfiguration` bleibt deaktiviert

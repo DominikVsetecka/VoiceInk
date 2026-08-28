@@ -6,18 +6,18 @@ configured as `origin`.
 
 ## Current custom features
 
-- No runtime feature has been implemented yet.
-- A central, disabled feature configuration exists as scaffolding for future
-  fork-owned work.
-- The first planned feature area is a custom streaming provider, using the
-  existing `StreamingTranscriptionProvider` contract and shared streaming
-  service.
+- OpenAI Whisper v1 is available as a cloud batch transcription model.
+- It uses the existing `CloudProvider` contract and LLMkit's
+  `OpenAITranscriptionClient`.
+- It can be disabled through `CustomFeatureConfiguration.openAIWhisperEnabled`.
+- Realtime streaming remains unchanged; `whisper-1` is batch-only.
 
 ## Fork-owned files
 
 - `VoiceInk/Custom/Configuration/CustomFeatureConfiguration.swift` — central
-  feature switches. Both switches default to `false` and are not integrated
-  into runtime behavior yet.
+  feature switches for fork-owned functionality.
+- `VoiceInk/Custom/Providers/OpenAIWhisperProvider.swift` — OpenAI Whisper v1
+  provider implementation.
 - `Makefile` remains the local build entry point; its local target contains the
   minimal Xcode/package settings needed for this Apple-Silicon checkout.
 - `scripts/check` — runs the prerequisite check and the normal VoiceInk build.
@@ -31,9 +31,15 @@ configured as `origin`.
   preserves `CRYPTO_IN_SWIFTPM` when enabling the local build condition. This
   is required because the current Xcode/SwiftPM combination otherwise tries to
   resolve unused `swift-crypto` BoringSSL modules on macOS.
+- `VoiceInk/Models/TranscriptionModel.swift` — adds the `OpenAI` provider enum
+  case required by the new cloud model.
+- `VoiceInk/Transcription/Cloud/CloudProvider.swift` — adds the provider
+  registry integration point and feature-flag boundary.
+- `VoiceInk/Views/Onboarding/OnboardingCoordinator.swift` — places OpenAI in
+  the cloud-provider selection order.
 
-The upstream VoiceInk source, project file, and existing providers remain
-unchanged.
+Existing VoiceInk services and providers remain unchanged. The listed files
+contain only the minimal integration points required for the new provider.
 
 ## Possible future conflict points
 
@@ -48,6 +54,9 @@ unchanged.
   can be merged with minimal conflict risk.
 - An upstream change to the `Makefile` local build target may conflict with the
   small local build integration described above.
+- An upstream change to `ModelProvider`, `CloudProviderRegistry`, or the
+  onboarding provider order may conflict with the corresponding small
+  integrations above.
 
 ## Recommended future streaming architecture
 

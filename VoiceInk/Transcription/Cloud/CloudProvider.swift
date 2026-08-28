@@ -30,18 +30,26 @@ extension CloudProvider {
 }
 
 enum CloudProviderRegistry {
-    static let allProviders: [any CloudProvider] = [
-        GroqProvider(),
-        ElevenLabsProvider(),
-        DeepgramProvider(),
-        MistralProvider(),
-        GeminiProvider(),
-        SonioxProvider(),
-        SpeechmaticsProvider(),
-        AssemblyAIProvider(),
-        XAIProvider(),
-        CartesiaProvider(),
-    ]
+    static var allProviders: [any CloudProvider] {
+        var providers: [any CloudProvider] = [
+            GroqProvider(),
+            ElevenLabsProvider(),
+            DeepgramProvider(),
+            MistralProvider(),
+            GeminiProvider(),
+            SonioxProvider(),
+            SpeechmaticsProvider(),
+            AssemblyAIProvider(),
+            XAIProvider(),
+            CartesiaProvider(),
+        ]
+
+        if CustomFeatureConfiguration.customFeaturesEnabled && CustomFeatureConfiguration.openAIWhisperEnabled {
+            providers.append(OpenAIWhisperProvider())
+        }
+
+        return providers
+    }
 
     static func provider(for modelProvider: ModelProvider) -> (any CloudProvider)? {
         allProviders.first { $0.modelProvider == modelProvider }
