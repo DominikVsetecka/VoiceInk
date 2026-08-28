@@ -28,13 +28,13 @@
 ## Last verified
 
 - Date: 2026-08-28
-- Commit: `68b871e` upstream baseline; lokale Custom-Dokumentation uncommitted
+- Commit: `aa4e427` (`Add custom feature configuration`)
 - Branch: `custom/live_streaming`
 - Environment: local macOS repository setup
-- Automated: Repository-/Remote-/Branch- und Architekturprüfung
+- Automated: `make check` passed; Custom-Datei syntaktisch geprüft
 - Manual: none
 - Not verified: Xcode compilation, app launch, audio, permissions, device/user acceptance
-- Git status: local-only, uncommitted
+- Git status: committed and pushed to `origin/custom/live_streaming`
 
 ## Log
 
@@ -46,7 +46,8 @@
   verwendet `StreamingTranscriptionProvider` und `StreamingTranscriptionService`.
 - Verified: GitHub-Zugriff, `upstream/main`, Remote-/Branch-Zustand und relevante
   Protocol-/Registry-Dateien geprüft.
-- Not verified: Build und manuelle App-Abnahme.
-- Git: setup changes uncommitted
+- Not verified: Full Xcode build; `make setup` benötigt lokal fehlendes CMake
+  3.28+; manuelle App-Abnahme.
+- Git: `dbccf83`, `aa4e427`, pushed to `origin/custom/live_streaming`
 - Orbit: not configured
-- Next: Full baseline build, anschließend kleiner Setup-Commit.
+- Next: CMake installieren/aktivieren und `./scripts/check` erneut ausführen.
