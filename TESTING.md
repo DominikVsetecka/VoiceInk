@@ -23,6 +23,7 @@ Abnahme. Im ersten Setup wurden keine Laufzeitfeatures verändert.
 - Integration tests: not configured
 - End-to-end tests: not configured
 - Build: `make build`
+- Local Apple-Silicon build: `make local`
 - Fast check: `make check`
 - Full check: `./scripts/check`
 

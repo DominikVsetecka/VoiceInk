@@ -15,10 +15,13 @@
 - Branch `custom/live_streaming` ist von `upstream/main` abgezweigt.
 - `VoiceInk/Custom/Configuration/CustomFeatureConfiguration.swift` ist mit
   deaktivierten Schaltern angelegt.
+- Der lokale Apple-Silicon-Build funktioniert mit `make local` und kopiert die
+  signierte App nach `~/Downloads/VoiceInk.app`.
 
 ### Open
 
-- Baseline-Build muss noch ausgeführt beziehungsweise abgeschlossen werden.
+- Die App muss noch manuell gestartet und hinsichtlich Mikrofon-, Audio- und
+  Berechtigungsverhalten abgenommen werden.
 - Erster eigener Streaming-Provider ist ausdrücklich nicht Teil dieses Blocks.
 
 ### Blocked
@@ -27,14 +30,15 @@
 
 ## Last verified
 
-- Date: 2026-08-28
-- Commit: `b1834ae` (`Document baseline check workflow`)
+- Date: 2026-08-29
+- Commit: pending (`Make local Apple-Silicon build reproducible`)
 - Branch: `custom/live_streaming`
-- Environment: local macOS repository setup
-- Automated: `make check` passed; Custom-Datei syntaktisch geprüft
+- Environment: local Apple-Silicon macOS, Xcode 26.6, Swift 6.3.3
+- Automated: `make check` passed; `make local` passed; App-Bundle erzeugt und
+  nach `~/Downloads/VoiceInk.app` kopiert
 - Manual: none
-- Not verified: Xcode compilation, app launch, audio, permissions, device/user acceptance
-- Git status: committed and pushed to `origin/custom/live_streaming`
+- Not verified: App launch, audio, permissions, device/user acceptance
+- Git status: changes ready for commit
 
 ## Log
 
@@ -52,6 +56,15 @@
 - Git: `dbccf83`, `aa4e427`, `c116c00`, `b1834ae`, pushed to `origin/custom/live_streaming`
 - Orbit: `ORB-0176` done, `ORB-0177` und `ORB-0178` ready
 - Next: `ORB-0177` bearbeiten, danach `ORB-0178`.
+
+### 2026-08-29 — Reproducible local Apple-Silicon build
+
+- Changed: `make local` erhält die notwendige `CRYPTO_IN_SWIFTPM`-Bedingung
+  und die lokalen Xcode-Validierungsoptionen.
+- Verified: `make local` erfolgreich; `CudaBuild` meldet auf macOS weiterhin
+  korrekt `CUDA is disabled`; App wurde nach `~/Downloads/VoiceInk.app` kopiert.
+- Not changed: Keine VoiceInk-App-Quelldatei, kein Provider und keine
+  Streaming-Implementierung.
 
 ### 2026-08-29 — Orbit-Projekt und Folge-Tickets angelegt
 

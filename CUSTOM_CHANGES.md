@@ -18,6 +18,8 @@ configured as `origin`.
 - `VoiceInk/Custom/Configuration/CustomFeatureConfiguration.swift` — central
   feature switches. Both switches default to `false` and are not integrated
   into runtime behavior yet.
+- `Makefile` remains the local build entry point; its local target contains the
+  minimal Xcode/package settings needed for this Apple-Silicon checkout.
 - `scripts/check` — runs the prerequisite check and the normal VoiceInk build.
 - `CUSTOM_CHANGES.md` — inventory and compatibility notes for this fork.
 - Project-start operational documentation: `AGENTS.md`, `CLAUDE.md`,
@@ -25,8 +27,13 @@ configured as `origin`.
 
 ## Original VoiceInk files changed
 
-None. The upstream VoiceInk source, project file, build files, and existing
-providers remain unchanged in this initial setup.
+- `Makefile` — adds the local Xcode package/macro validation switches and
+  preserves `CRYPTO_IN_SWIFTPM` when enabling the local build condition. This
+  is required because the current Xcode/SwiftPM combination otherwise tries to
+  resolve unused `swift-crypto` BoringSSL modules on macOS.
+
+The upstream VoiceInk source, project file, and existing providers remain
+unchanged.
 
 ## Possible future conflict points
 
@@ -39,6 +46,8 @@ providers remain unchanged in this initial setup.
   reviewed against those protocol and registry changes.
 - `VoiceInk/Custom/` is intentionally isolated so that upstream source updates
   can be merged with minimal conflict risk.
+- An upstream change to the `Makefile` local build target may conflict with the
+  small local build integration described above.
 
 ## Recommended future streaming architecture
 
