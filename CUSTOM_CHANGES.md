@@ -18,6 +18,7 @@ configured as `origin`.
 - `VoiceInk/Custom/Configuration/CustomFeatureConfiguration.swift` — central
   feature switches. Both switches default to `false` and are not integrated
   into runtime behavior yet.
+- `scripts/check` — runs the prerequisite check and the normal VoiceInk build.
 - `CUSTOM_CHANGES.md` — inventory and compatibility notes for this fork.
 - Project-start operational documentation: `AGENTS.md`, `CLAUDE.md`,
   `TESTING.md`, `PROGRESS.md`, `PLAN.md`, and `ROADMAP.md`.

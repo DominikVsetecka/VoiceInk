@@ -28,7 +28,7 @@
 ## Last verified
 
 - Date: 2026-08-28
-- Commit: `aa4e427` (`Add custom feature configuration`)
+- Commit: `b1834ae` (`Document baseline check workflow`)
 - Branch: `custom/live_streaming`
 - Environment: local macOS repository setup
 - Automated: `make check` passed; Custom-Datei syntaktisch geprüft
@@ -48,6 +48,6 @@
   Protocol-/Registry-Dateien geprüft.
 - Not verified: Full Xcode build; `make setup` benötigt lokal fehlendes CMake
   3.28+; manuelle App-Abnahme.
-- Git: `dbccf83`, `aa4e427`, pushed to `origin/custom/live_streaming`
+- Git: `dbccf83`, `aa4e427`, `c116c00`, `b1834ae`, pushed to `origin/custom/live_streaming`
 - Orbit: not configured
 - Next: CMake installieren/aktivieren und `./scripts/check` erneut ausführen.
