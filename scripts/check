@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eu
+
+echo "== VoiceInk prerequisite check =="
+make check
+
+echo "== VoiceInk full baseline build =="
+make build

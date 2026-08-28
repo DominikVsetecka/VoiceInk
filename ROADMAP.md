@@ -1,0 +1,38 @@
+# ROADMAP — VoiceInk Personal Fork
+
+## Product direction
+
+Langfristig soll der Fork eigene Transkriptions- und Kontextfunktionen erhalten,
+während Updates aus `upstream/main` mit möglichst wenigen Konflikten übernommen
+werden können.
+
+## Current horizon
+
+Ziel: stabile, dokumentierte Fork-Basis.
+
+- Upstream-/Origin-Remotes und Branch-Policy
+- Isolierter `VoiceInk/Custom/`-Bereich
+- Zentrale, deaktivierte Feature-Konfiguration
+- Reproduzierbarer Baseline-Build
+
+Exit criteria:
+
+- `main` zeigt auf einen Upstream-Baseline-Stand.
+- Eigene Setup-Änderungen sind auf `custom/live_streaming` nachvollziehbar.
+- Upstream-Funktion bleibt unverändert.
+
+## Next horizon
+
+Ziel: eigenen Streaming-Provider als getrennten, kleinen Implementierungsblock
+untersuchen und über bestehende Protocols integrieren.
+
+## Later / explore
+
+- Kontext-Injektion über bestehende Request-/Mode-Abstraktionen
+- Provider-spezifische Konfiguration und Tests
+
+## Explicit non-goals
+
+- Keine parallele Streaming-Architektur
+- Keine Änderung bestehender Provider ohne technische Notwendigkeit
+- Keine automatische Übernahme oder Vermischung von Upstream-Commits
