@@ -1,5 +1,12 @@
 # PLAN — VoiceInk Fork — Baseline Setup
 
+## Orbit refs
+
+- Project: `voiceink_fork`
+- Active tickets: `ORB-0177`, `ORB-0178`
+- Completed setup: `ORB-0176`
+- Decisions: none
+
 ## Goal
 
 Eine updatefähige persönliche Fork-Basis herstellen, ohne bestehende VoiceInk-

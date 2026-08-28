@@ -1,5 +1,11 @@
 # ROADMAP — VoiceInk Personal Fork
 
+## Orbit refs
+
+- Project: `voiceink_fork`
+- Current tickets: `ORB-0177`, `ORB-0178`
+- Decisions: none
+
 ## Product direction
 
 Langfristig soll der Fork eigene Transkriptions- und Kontextfunktionen erhalten,

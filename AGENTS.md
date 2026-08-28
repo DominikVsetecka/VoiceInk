@@ -5,11 +5,11 @@ persönlichen VoiceInk-Fork.
 
 ## Projektkontext
 
-- Project ID: not configured (kein Orbit-Projekt angelegt)
+- Project ID: `voiceink_fork`
 - Project root: `/Users/dominikvsetecka/Documents/Projekte/voiceink_fork`
 - Purpose: Persönlicher, langfristig wartbarer VoiceInk-Fork mit isolierten eigenen Erweiterungen.
 - Stack: native macOS-App, Swift, Xcode, SwiftData, Swift Package Manager
-- Active Orbit tickets: none
+- Active Orbit tickets: `ORB-0177`, `ORB-0178`
 - Decisions: none
 - Default branch: `main`
 - Remote: `origin=https://github.com/DominikVsetecka/VoiceInk.git`, `upstream=https://github.com/Beingpax/VoiceInk.git`
@@ -58,5 +58,12 @@ persönlichen VoiceInk-Fork.
 - `ROADMAP.md`: langfristige Richtung
 
 Keine Secrets, lokalen Schlüssel, produktiven Daten oder Build-Artefakte
-committen. Orbit ist für diesen Fork derzeit `not configured` und wird nicht
-ohne bestätigte Projektidentität angelegt.
+committen. Die bestätigte Orbit-Projektdatei liegt unter
+`/Users/dominikvsetecka/Documents/Projekte/_orbit/data/projects/voiceink_fork.json`.
+
+## Orbit
+
+Vor größerer Implementierungs- oder Planungsarbeit zuerst die Orbit-Projektdatei
+und die offenen Tickets `ORB-0177` und `ORB-0178` lesen. Orbit ist die operative
+Quelle für Status, nächste Schritte und offene Entscheidungen; `PROGRESS.md`,
+`PLAN.md` und `ROADMAP.md` bleiben die ausführliche, commitbare Dokumentation.

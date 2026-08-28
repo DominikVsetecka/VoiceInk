@@ -2,8 +2,8 @@
 
 ## Orbit refs
 
-- Project: not configured
-- Active tickets: none
+- Project: `voiceink_fork`
+- Active tickets: `ORB-0177`, `ORB-0178`
 - Decisions: none
 
 ## Current state
@@ -46,8 +46,21 @@
   verwendet `StreamingTranscriptionProvider` und `StreamingTranscriptionService`.
 - Verified: GitHub-Zugriff, `upstream/main`, Remote-/Branch-Zustand und relevante
   Protocol-/Registry-Dateien geprüft.
-- Not verified: Full Xcode build; `make setup` benötigt lokal fehlendes CMake
-  3.28+; manuelle App-Abnahme.
+- Not verified: Full Xcode app build; Whisper-XCFramework built successfully,
+  but Xcode stopped at `CudaBuild` package-plugin validation; manuelle
+  App-Abnahme.
 - Git: `dbccf83`, `aa4e427`, `c116c00`, `b1834ae`, pushed to `origin/custom/live_streaming`
-- Orbit: not configured
-- Next: CMake installieren/aktivieren und `./scripts/check` erneut ausführen.
+- Orbit: `ORB-0176` done, `ORB-0177` und `ORB-0178` ready
+- Next: `ORB-0177` bearbeiten, danach `ORB-0178`.
+
+### 2026-08-29 — Orbit-Projekt und Folge-Tickets angelegt
+
+- Changed: Orbit-Projekt `voiceink_fork` angelegt und die Fork-Basis, das
+  CudaBuild-/Dependency-Thema sowie die Streaming-Architektur als Tickets erfasst.
+- Decisions: Keine neue Architekturentscheidung; das CudaBuild-Thema bleibt
+  zunächst ein separates Wartungs-/Recherche-Ticket.
+- Verified: Orbit-JSON und Events validiert.
+- Not verified: CudaBuild-Workaround und Dependency-Update noch offen.
+- Git: keine Repository-Änderung in diesem Schritt.
+- Orbit: `ORB-0176` done, `ORB-0177` und `ORB-0178` ready
+- Next: `ORB-0177` bearbeiten, danach `ORB-0178`.
