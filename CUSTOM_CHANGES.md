@@ -7,6 +7,8 @@ configured as `origin`.
 ## Current custom features
 
 - OpenAI Whisper v1 is available as a cloud batch transcription model.
+- When enabled, local Parakeet V3 provides the live preview and OpenAI remains
+  authoritative for the final transcript after recording stops.
 - It uses the existing `CloudProvider` contract and LLMkit's
   `OpenAITranscriptionClient`.
 - It can be disabled through `CustomFeatureConfiguration.openAIWhisperEnabled`.
@@ -18,6 +20,8 @@ configured as `origin`.
   feature switches for fork-owned functionality.
 - `VoiceInk/Custom/Providers/OpenAIWhisperProvider.swift` — OpenAI Whisper v1
   provider implementation.
+- `VoiceInk/Custom/Streaming/OpenAIWhisperLocalPreviewProvider.swift` — local
+  Parakeet V3 preview with OpenAI batch fallback.
 - `Makefile` remains the local build entry point; its local target contains the
   minimal Xcode/package settings needed for this Apple-Silicon checkout.
 - `scripts/check` — runs the prerequisite check and the normal VoiceInk build.
@@ -37,6 +41,8 @@ configured as `origin`.
   registry integration point and feature-flag boundary.
 - `VoiceInk/Views/Onboarding/OnboardingCoordinator.swift` — places OpenAI in
   the cloud-provider selection order.
+- `VoiceInk/Models/TranscriptionRealtimeSupport.swift` — exposes the hybrid
+  preview as the existing per-mode realtime option.
 
 Existing VoiceInk services and providers remain unchanged. The listed files
 contain only the minimal integration points required for the new provider.
@@ -57,6 +63,8 @@ contain only the minimal integration points required for the new provider.
 - An upstream change to `ModelProvider`, `CloudProviderRegistry`, or the
   onboarding provider order may conflict with the corresponding small
   integrations above.
+- An upstream change to realtime availability or session fallback behavior may
+  affect the hybrid preview integration.
 
 ## Recommended future streaming architecture
 

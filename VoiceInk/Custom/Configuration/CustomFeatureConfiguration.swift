@@ -11,6 +11,9 @@ enum CustomFeatureConfiguration {
     /// Enables the OpenAI Whisper v1 cloud model.
     static let openAIWhisperEnabled = true
 
+    /// Uses local Parakeet V3 for the live preview while OpenAI remains final.
+    static let openAIWhisperLocalPreviewEnabled = true
+
     /// Reserved for a future custom streaming provider experiment.
     static let liveStreamingEnabled = false
 }

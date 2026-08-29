@@ -26,6 +26,9 @@ Abnahme. Im ersten Setup wurden keine Laufzeitfeatures verändert.
 - Local Apple-Silicon build: `make local`
 - OpenAI Whisper v1: configure an OpenAI API key, select `OpenAI / Whisper v1`,
   record a short sample, stop recording, and verify the returned transcript.
+- Hybrid preview: enable `Real-time` in the selected mode, keep `Live Text
+  Display` enabled, and verify that Parakeet V3 text appears while speaking;
+  after stopping, verify that the final saved text comes from OpenAI.
 - Fast check: `make check`
 - Full check: `./scripts/check`
 

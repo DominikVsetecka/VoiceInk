@@ -40,7 +40,10 @@ struct OpenAIWhisperProvider: CloudProvider {
         )
     }
 
-    func makeStreamingProvider(modelContext: ModelContext) -> (any StreamingTranscriptionProvider)? { nil }
+    func makeStreamingProvider(modelContext: ModelContext) -> (any StreamingTranscriptionProvider)? {
+        guard CustomFeatureConfiguration.openAIWhisperLocalPreviewEnabled else { return nil }
+        return OpenAIWhisperLocalPreviewProvider()
+    }
 
     func verifyAPIKey(_ key: String) async -> (isValid: Bool, errorMessage: String?) {
         await OpenAITranscriptionClient.verifyAPIKey(

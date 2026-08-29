@@ -2,7 +2,12 @@ import Foundation
 
 enum TranscriptionRealtimeSupport {
     static func isAvailable(for model: any TranscriptionModel) -> Bool {
-        model.supportsStreaming
+        if model.provider == .openAI {
+            return CustomFeatureConfiguration.customFeaturesEnabled
+                && CustomFeatureConfiguration.openAIWhisperEnabled
+                && CustomFeatureConfiguration.openAIWhisperLocalPreviewEnabled
+        }
+        return model.supportsStreaming
     }
 
     static func isRequired(for model: any TranscriptionModel) -> Bool {

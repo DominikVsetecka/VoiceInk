@@ -18,6 +18,8 @@
   deaktiviert.
 - OpenAI Whisper v1 ist als eigener CloudProvider unter `VoiceInk/Custom/`
   integriert.
+- Die Hybrid-Vorschau verwendet lokal installiertes Parakeet V3 während der
+  Aufnahme und OpenAI Whisper v1 für das finale Ergebnis.
 - Der lokale Apple-Silicon-Build funktioniert mit `make local` und kopiert die
   signierte App nach `~/Downloads/VoiceInk.app`.
 
