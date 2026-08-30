@@ -26,11 +26,33 @@ struct SettingsView: View {
     @State private var showResetOnboardingAlert = false
     @State private var showLanguageRestartAlert = false
     @State private var cancelRecordingShortcutRecorderResetID = 0
+    @State private var selectedSettingsTab: SettingsTab = .general
 
     @State private var isMiddleClickExpanded = false
     @State private var isRestoreClipboardExpanded = false
 
     var body: some View {
+        VStack(spacing: 0) {
+            Picker("Settings Section", selection: $selectedSettingsTab) {
+                ForEach(SettingsTab.allCases) { tab in
+                    Text(tab.title).tag(tab)
+                }
+            }
+            .pickerStyle(.segmented)
+            .padding(.horizontal, 16)
+            .padding(.top, 12)
+            .padding(.bottom, 4)
+
+            switch selectedSettingsTab {
+            case .general:
+                generalSettings
+            case .permissions:
+                PermissionsSettingsView()
+            }
+        }
+    }
+
+    private var generalSettings: some View {
         Form {
             Section {
                 LabeledContent("Primary Shortcut") {
@@ -347,6 +369,22 @@ struct SettingsView: View {
         }
         .labelsHidden()
         .fixedSize()
+    }
+}
+
+private enum SettingsTab: String, CaseIterable, Identifiable {
+    case general
+    case permissions
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .general:
+            return String(localized: "General")
+        case .permissions:
+            return String(localized: "Permissions")
+        }
     }
 }
 

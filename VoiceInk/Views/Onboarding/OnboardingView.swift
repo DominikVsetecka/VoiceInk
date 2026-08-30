@@ -8,6 +8,7 @@ struct OnboardingView: View {
     @EnvironmentObject var aiService: AIService
     @EnvironmentObject var enhancementService: AIEnhancementService
     @StateObject private var coordinator = OnboardingCoordinator()
+    @State private var showSkipSetupConfirmation = false
     let contentMaxWidth: CGFloat = 560
 
     var body: some View {
@@ -220,9 +221,32 @@ struct OnboardingView: View {
             .padding(.bottom, 26)
             .allowsHitTesting(false)
 
+            Button("Skip Setup") {
+                showSkipSetupConfirmation = true
+            }
+            .buttonStyle(.plain)
+            .foregroundColor(AppTheme.Action.secondaryForeground)
+            .padding(.trailing, 28)
+            .padding(.top, 24)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+
         }
         .frame(minWidth: 820, minHeight: 680)
         .animation(.easeInOut(duration: 0.22), value: coordinator.stage)
+        .confirmationDialog(
+            "Skip VoiceInk setup?",
+            isPresented: $showSkipSetupConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button("Skip Setup") {
+                coordinator.flow.skipOnboarding {
+                    hasCompletedOnboardingV2 = true
+                }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("You can configure permissions, microphone, and models later from Settings.")
+        }
         .onAppear {
             coordinator.flow.ensureDefaultOnboardingTranscriptionProvider()
             coordinator.flow.refreshTranscriptionSetupVerification()

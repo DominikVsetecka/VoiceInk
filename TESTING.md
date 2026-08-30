@@ -32,6 +32,10 @@ Abnahme. Im ersten Setup wurden keine Laufzeitfeatures verändert.
 - Hotkey recovery: after launching VoiceInk, granting Accessibility, waking the
   Mac, or reconnecting a display, verify that the global recording shortcut
   still starts and stops recording.
+- Permissions settings: open Settings → Permissions, verify the three current
+  status values, use Refresh, and open each corresponding macOS settings pane.
+- Onboarding skip: reset onboarding, select Skip Setup, confirm, and verify that
+  the app opens normally and permissions remain manageable from Settings.
 - Fast check: `make check`
 - Full check: `./scripts/check`
 

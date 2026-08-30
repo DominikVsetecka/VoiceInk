@@ -22,6 +22,8 @@ configured as `origin`.
   provider implementation.
 - `VoiceInk/Custom/Streaming/OpenAIWhisperLocalPreviewProvider.swift` — local
   Parakeet V3 preview with OpenAI batch fallback.
+- `VoiceInk/Custom/Features/PermissionsSettingsView.swift` — permission status
+  and macOS System Settings actions available from the Settings tab.
 - `Makefile` remains the local build entry point; its local target contains the
   minimal Xcode/package settings needed for this Apple-Silicon checkout.
 - `scripts/check` — runs the prerequisite check and the normal VoiceInk build.
@@ -43,6 +45,10 @@ configured as `origin`.
   the cloud-provider selection order.
 - `VoiceInk/Models/TranscriptionRealtimeSupport.swift` — exposes the hybrid
   preview as the existing per-mode realtime option.
+- `VoiceInk/Views/Settings/SettingsView.swift` — adds General and Permissions
+  tabs while keeping the existing settings form intact.
+- `VoiceInk/Views/Onboarding/OnboardingView.swift` — adds a confirmation-based
+  setup skip action; skipped setup can be completed later in Settings.
 - `VoiceInk/Shortcuts/RecordingShortcutManager.swift` — retries global shortcut
   registration after permission changes, app activation, wake, and display wake
   so a temporarily unavailable macOS event tap does not leave shortcuts inactive.
@@ -70,6 +76,8 @@ contain only the minimal integration points required for the new provider.
   affect the hybrid preview integration.
 - An upstream change to shortcut lifecycle handling or `LifecycleObserver` may
   conflict with the small event-tap recovery integration above.
+- An upstream change to onboarding layout or SettingsView structure may
+  conflict with the small navigation integrations above.
 
 ## Recommended future streaming architecture
 

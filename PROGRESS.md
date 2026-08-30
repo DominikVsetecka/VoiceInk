@@ -24,6 +24,9 @@
   signierte App nach `~/Downloads/VoiceInk.app`.
 - Die globale Shortcut-Registrierung versucht sich nach Berechtigungs- und
   macOS-Lifecycle-Ereignissen automatisch erneut zu verbinden.
+- Berechtigungen können nun in einem eigenen Settings-Tab geprüft und erneut in
+  den macOS-Systemeinstellungen geöffnet werden; das Onboarding kann übersprungen
+  werden.
 
 ### Open
 
@@ -79,7 +82,7 @@
   Aktivierung, Aufwachen und Display-Ereignissen erneut und wiederholt die
   Registrierung kurzzeitig, falls macOS noch nicht bereit ist.
 - Verified: Lokaler Apple-Silicon-Xcode-Build erfolgreich; manuelle Hotkey- und
-  Overlay-Abnahme steht noch aus.
+  Overlay-Abnahme sowie die neue Berechtigungsansicht stehen noch aus.
 - Git: `cd09036` (Hotkey-Recovery).
 
 ### 2026-08-29 — Orbit-Projekt und Folge-Tickets angelegt
