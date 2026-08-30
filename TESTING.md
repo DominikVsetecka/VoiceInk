@@ -40,8 +40,10 @@ Abnahme. Im ersten Setup wurden keine Laufzeitfeatures verändert.
   confirm that disabling the display hides cost labels.
 - History API costs: use OpenAI / Whisper v1 for a short recording, verify a
   four-decimal cost badge in both the main-window History and the separate
-  History window, verify the detail panel, then select all history entries and
-  open Analysis to verify aggregate minutes and estimated cost.
+  History window, verify the detail panel, and verify that both views show an
+  all-history overview above the list with total Whisper minutes and cost.
+  Then select all history entries and open Analysis to verify the separate
+  selected-entry aggregate.
 - Onboarding skip: reset onboarding, select Skip Setup, confirm, and verify that
   the app opens normally and permissions remain manageable from Settings.
 - Fast check: `make check`
@@ -118,10 +120,11 @@ kompilieren.
 - Environment: gebaute macOS-App mit OpenAI Whisper v1 und aktiviertem API-Costs-Tab
 - Given: mindestens eine erfolgreich über OpenAI transkribierte Aufnahme
 - When: History-Eintrag öffnen und danach `Select All` → `Analyze` verwenden
-- Expected: Einzelkosten mit vier Nachkommastellen, gesamte Whisper-Minuten und
-  eine geschätzte Gesamtsumme werden in beiden History-Ansichten angezeigt;
-  sehr kleine positive Beträge erscheinen als `<0,0001` statt als `0,0000`, und
-  lokale Modelle erscheinen nicht als kostenpflichtig.
+- Expected: Einzelkosten mit vier Nachkommastellen, eine dauerhaft sichtbare
+  Gesamtübersicht mit bisherigen Whisper-Minuten und geschätzter Gesamtsumme
+  sowie die ausgewählte Aggregation in Analysis werden in beiden History-
+  Ansichten angezeigt; sehr kleine positive Beträge erscheinen als `<0,0001`
+  statt als `0,0000`, und lokale Modelle erscheinen nicht als kostenpflichtig.
 - Evidence: Anzeige mit dem konfigurierten Preis pro Minute gegenrechnen.
 
 ### Scenario 5 — Audio cleanup preserves history

@@ -15,12 +15,14 @@ configured as `origin`.
 - Local estimated API usage costs are shown for supported cloud transcription
   models, currently OpenAI Whisper v1. The estimate uses the recorded audio
   duration and an editable per-minute rate; local models are not charged.
-- Costs are visible per history entry, in the transcription details, and as a
-  total for the selected history entries in both the main-window history and
-  the separate History window. Cost values use four decimal places so the
-  per-second Whisper v1 value of `0.0001 USD` remains visible; amounts below
-  `0.0001` are shown as `<0.0001`. The complete history can be selected through
-  the existing `Select All` action.
+- Costs are visible per history entry, in the transcription details, as a
+  selected-entry total in the existing analysis panel, and as an always-visible
+  all-history overview at the top of both the main-window history and the
+  separate History window. The overview shows total Whisper v1 minutes and the
+  total in the currently selected USD/EUR display currency. Cost values use
+  four decimal places so the per-second Whisper v1 value of `0.0001 USD`
+  remains visible; amounts below `0.0001` are shown as `<0.0001`. The complete
+  history can still be selected through the existing `Select All` action.
 - Realtime streaming remains unchanged; `whisper-1` is batch-only.
 
 ## Fork-owned files
@@ -35,6 +37,8 @@ configured as `origin`.
   pricing, currency, and display settings for cost estimates.
 - `VoiceInk/Custom/Usage/CustomUsageCostCalculator.swift` — calculates local
   per-recording and aggregate estimates without changing the SwiftData schema.
+- `VoiceInk/Views/History/CustomHistoryCostOverview.swift` — queries the complete
+  history and renders the total Whisper v1 minutes and cost overview.
 - `VoiceInk/Views/History/CustomHistoryCostSection.swift` — cost summary for
   selected history entries.
 - `VoiceInk/Views/Settings/CustomUsageCostSettingsView.swift` — API cost settings
@@ -72,7 +76,10 @@ configured as `origin`.
 - `VoiceInk/Views/History/TranscriptionListItem.swift` — adds a small estimated
   cost badge to supported cloud transcription entries.
 - `VoiceInk/Views/History/InlineHistoryView.swift` — adds the same duration and
-  cost badges to the main-window history cards.
+  cost badges to the main-window history cards and embeds the all-history cost
+  overview.
+- `VoiceInk/Views/History/TranscriptionHistoryView.swift` — embeds the same
+  all-history cost overview in the separate History window.
 - `VoiceInk/Views/Common/TranscriptionInfoPanel.swift` — adds the estimated cost
   to the existing transcription metadata panel.
 - `VoiceInk/Views/Onboarding/OnboardingView.swift` — adds a confirmation-based
@@ -111,6 +118,9 @@ contain only the minimal integration points required for the new provider.
   conflict with the small navigation integrations above.
 - An upstream change to the History analysis/list/detail views or SettingsView
   structure may conflict with the small cost-display integration points above.
+- An upstream change to the pagination or layout of either History view may
+  conflict with the small overview insertion points; the overview itself uses
+  an independent complete-history query and does not depend on pagination.
 - Cost estimates intentionally use current user-configured rates and are not
   invoice-accurate historical records yet. A future exact-history implementation
   would need a fork-owned usage record with a price snapshot per API request.

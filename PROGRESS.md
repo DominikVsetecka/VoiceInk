@@ -35,6 +35,10 @@
   EUR-Umrechnung hat ein eigenes Eingabefeld für `1 USD = … EUR`, Reset und eine
   Beispielrechnung. Beträge werden mit vier Nachkommastellen angezeigt; kleinere
   positive Beträge werden als `<0,0001` ausgewiesen.
+- Beide History-Ansichten zeigen zusätzlich oberhalb der Einträge eine
+  all-history Übersicht mit den bisher verarbeiteten Whisper-v1-Minuten und dem
+  Gesamtbetrag in der aktuell gewählten Währung. Die Übersicht fragt die
+  vollständige SwiftData-History unabhängig von der Seitenpagination ab.
 
 ### Open
 
@@ -49,14 +53,15 @@
 ## Last verified
 
 - Date: 2026-08-30
-- Commit: `cd09036` (`Retry global shortcuts after permission and wake events`)
+- Commit: `56fc675` (`Document all-history Whisper cost overview`)
 - Branch: `custom/live_streaming`
 - Environment: local Apple-Silicon macOS, Xcode 26.6, Swift 6.3.3
-- Automated: `make check` passed; `make local` passed; App-Bundle erzeugt und
-  nach `~/Downloads/VoiceInk.app` kopiert
+- Automated: `make local-release` passed; App-Bundle erzeugt, nach
+  `~/Downloads/VoiceInk.app` kopiert und nach `/Applications/VoiceInk.app`
+  installiert; Codesignatur geprüft
 - Manual: none
 - Not verified: App launch, audio, permissions, device/user acceptance
-- Git status: clean after the hotkey-recovery commit
+- Git status: clean after the all-history cost overview changes
 
 ## Log
 
@@ -127,6 +132,17 @@
   Aufrundung jeder angefangenen Minute wird nicht angenommen.
 - Verified: `make local-release` erfolgreich; App aktualisiert und signiert nach
   `/Applications/VoiceInk.app`.
+
+### 2026-08-30 — Gesamtübersicht für Whisper-Kosten ergänzt
+
+- Changed: Neue fork-eigene `CustomHistoryCostOverview` zeigt in beiden History-
+  Ansichten die bisherige Whisper-v1-Minuten- und Kostensumme oberhalb der
+  Einträge.
+- Decision: Die Übersicht fragt alle Transcription-Datensätze unabhängig von der
+  paginierten oder gefilterten Liste ab; die bestehende Auswahl-Analyse bleibt
+  davon getrennt.
+- Verified: `make local-release` erfolgreich; die aktualisierte App wurde nach
+  `/Applications/VoiceInk.app` installiert und die Signatur geprüft.
 
 ### 2026-08-29 — Orbit-Projekt und Folge-Tickets angelegt
 
