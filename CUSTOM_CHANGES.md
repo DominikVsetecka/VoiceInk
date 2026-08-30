@@ -16,8 +16,10 @@ configured as `origin`.
   models, currently OpenAI Whisper v1. The estimate uses the recorded audio
   duration and an editable per-minute rate; local models are not charged.
 - Costs are visible per history entry, in the transcription details, and as a
-  total for the selected history entries. The complete history can be selected
-  through the existing `Select All` action.
+  total for the selected history entries in both the main-window history and
+  the separate History window. Cost values use three decimal places so the
+  Whisper v1 rate of `0.006 USD/min` remains visible. The complete history can
+  be selected through the existing `Select All` action.
 - Realtime streaming remains unchanged; `whisper-1` is batch-only.
 
 ## Fork-owned files
@@ -68,6 +70,8 @@ configured as `origin`.
   aggregate cost section to the existing analysis panel.
 - `VoiceInk/Views/History/TranscriptionListItem.swift` — adds a small estimated
   cost badge to supported cloud transcription entries.
+- `VoiceInk/Views/History/InlineHistoryView.swift` — adds the same duration and
+  cost badges to the main-window history cards.
 - `VoiceInk/Views/Common/TranscriptionInfoPanel.swift` — adds the estimated cost
   to the existing transcription metadata panel.
 - `VoiceInk/Views/Onboarding/OnboardingView.swift` — adds a confirmation-based

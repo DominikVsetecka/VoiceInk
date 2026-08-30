@@ -39,8 +39,9 @@ Abnahme. Im ersten Setup wurden keine Laufzeitfeatures verändert.
   rate, switch USD/EUR, enter a custom `1 USD = … EUR` rate, use Reset, and
   confirm that disabling the display hides cost labels.
 - History API costs: use OpenAI / Whisper v1 for a short recording, verify a
-  cost badge on the history entry and its detail panel, then select all history
-  entries and open Analysis to verify the aggregate minutes and estimated cost.
+  three-decimal cost badge in both the main-window History and the separate
+  History window, verify the detail panel, then select all history entries and
+  open Analysis to verify aggregate minutes and estimated cost.
 - Onboarding skip: reset onboarding, select Skip Setup, confirm, and verify that
   the app opens normally and permissions remain manageable from Settings.
 - Fast check: `make check`
@@ -117,9 +118,19 @@ kompilieren.
 - Environment: gebaute macOS-App mit OpenAI Whisper v1 und aktiviertem API-Costs-Tab
 - Given: mindestens eine erfolgreich über OpenAI transkribierte Aufnahme
 - When: History-Eintrag öffnen und danach `Select All` → `Analyze` verwenden
-- Expected: Einzelkosten, gesamte Whisper-Minuten und eine geschätzte Gesamtsumme
-  werden angezeigt; lokale Modelle erscheinen nicht als kostenpflichtig.
+- Expected: Einzelkosten mit drei Nachkommastellen, gesamte Whisper-Minuten und
+  eine geschätzte Gesamtsumme werden in beiden History-Ansichten angezeigt;
+  lokale Modelle erscheinen nicht als kostenpflichtig.
 - Evidence: Anzeige mit dem konfigurierten Preis pro Minute gegenrechnen.
+
+### Scenario 5 — Audio cleanup preserves history
+
+- Environment: gebaute macOS-App mit mindestens einem History-Eintrag und Audio-Datei
+- Given: Audio cleanup aus den History Settings ausführen
+- When: die Bereinigung abgeschlossen ist
+- Expected: Die Audio-Datei ist entfernt, der History-Eintrag und sein Text bleiben
+  erhalten; ein explizites Löschen des History-Eintrags entfernt dagegen beides.
+- Evidence: History-Eintrag nach der Bereinigung öffnen und Audio-Abwesenheit prüfen.
 
 ## Warnings and limitations
 

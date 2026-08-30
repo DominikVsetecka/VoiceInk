@@ -30,9 +30,10 @@
   den macOS-Systemeinstellungen geöffnet werden; das Onboarding kann übersprungen
   werden.
 - Die lokale API-Kostenschätzung zeigt OpenAI-Whisper-Kosten pro History-Eintrag,
-  in den Details und aggregiert für ausgewählte Einträge; Preis und Währung sind
-  in Settings → API Costs konfigurierbar. Die EUR-Umrechnung hat ein eigenes
-  Eingabefeld für `1 USD = … EUR`, Reset und eine Beispielrechnung.
+  in den Details und aggregiert für ausgewählte Einträge in beiden History-
+  Ansichten; Preis und Währung sind in Settings → API Costs konfigurierbar. Die
+  EUR-Umrechnung hat ein eigenes Eingabefeld für `1 USD = … EUR`, Reset und eine
+  Beispielrechnung. Beträge werden mit drei Nachkommastellen angezeigt.
 
 ### Open
 
@@ -113,6 +114,18 @@
 - Verified: `make local-release` erfolgreich; App aktualisiert und signiert nach
   `/Applications/VoiceInk.app`.
 - Orbit: `ORB-0180` erledigt.
+
+### 2026-08-30 — History-Kostenanzeige vereinheitlicht
+
+- Changed: Die Kostenanzeige wurde auch in die History-Karten des Hauptfensters
+  integriert; das separate History-Fenster zeigt sie weiterhin.
+- Changed: Währungsbeträge verwenden drei Nachkommastellen, damit kleine
+  Whisper-Kosten wie `0,006` sichtbar bleiben.
+- Decision: Die lokale Schätzung rechnet sekundenbasiert (`Sekunden / 60 × Preis`),
+  weil OpenAI die verarbeiteten Sekunden in den Usage-Daten ausweist. Eine
+  Aufrundung jeder angefangenen Minute wird nicht angenommen.
+- Verified: `make local-release` erfolgreich; App aktualisiert und signiert nach
+  `/Applications/VoiceInk.app`.
 
 ### 2026-08-29 — Orbit-Projekt und Folge-Tickets angelegt
 
