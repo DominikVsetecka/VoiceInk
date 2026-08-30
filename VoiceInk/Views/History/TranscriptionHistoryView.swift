@@ -206,6 +206,10 @@ struct TranscriptionHistoryView: View {
             )
             .padding(12)
 
+            CustomHistoryCostOverview()
+                .padding(.horizontal, 12)
+                .padding(.bottom, 8)
+
             Divider()
 
             ZStack(alignment: .bottom) {

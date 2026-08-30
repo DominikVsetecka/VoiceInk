@@ -82,6 +82,11 @@ struct InlineHistoryView: View {
     var body: some View {
         VStack(spacing: 0) {
             topBar
+
+            CustomHistoryCostOverview()
+                .padding(.horizontal, 24)
+                .padding(.bottom, 8)
+
             Divider()
 
             if displayedTranscriptions.isEmpty && !isLoading {
