@@ -31,7 +31,8 @@
   werden.
 - Die lokale API-Kostenschätzung zeigt OpenAI-Whisper-Kosten pro History-Eintrag,
   in den Details und aggregiert für ausgewählte Einträge; Preis und Währung sind
-  in Settings → API Costs konfigurierbar.
+  in Settings → API Costs konfigurierbar. Die EUR-Umrechnung hat ein eigenes
+  Eingabefeld für `1 USD = … EUR`, Reset und eine Beispielrechnung.
 
 ### Open
 

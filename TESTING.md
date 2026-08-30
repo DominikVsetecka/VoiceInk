@@ -36,7 +36,8 @@ Abnahme. Im ersten Setup wurden keine Laufzeitfeatures verändert.
 - Permissions settings: open Settings → Permissions, verify the three current
   status values, use Refresh, and open each corresponding macOS settings pane.
 - API cost settings: open Settings → API Costs, verify the default Whisper v1
-  rate, switch USD/EUR, and confirm that disabling the display hides cost labels.
+  rate, switch USD/EUR, enter a custom `1 USD = … EUR` rate, use Reset, and
+  confirm that disabling the display hides cost labels.
 - History API costs: use OpenAI / Whisper v1 for a short recording, verify a
   cost badge on the history entry and its detail panel, then select all history
   entries and open Analysis to verify the aggregate minutes and estimated cost.

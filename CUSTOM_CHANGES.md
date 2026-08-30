@@ -35,7 +35,8 @@ configured as `origin`.
 - `VoiceInk/Views/History/CustomHistoryCostSection.swift` — cost summary for
   selected history entries.
 - `VoiceInk/Views/Settings/CustomUsageCostSettingsView.swift` — API cost settings
-  for enabling the display, changing the rate, and choosing USD/EUR.
+  for enabling the display, changing the rate, and choosing USD/EUR; the EUR
+  view includes an explicit `1 USD = … EUR` input, reset action, and example.
 - `VoiceInk/Custom/Features/PermissionsSettingsView.swift` — permission status
   and macOS System Settings actions available from the Settings tab.
 - `Makefile` remains the local build entry point; its local target contains the
