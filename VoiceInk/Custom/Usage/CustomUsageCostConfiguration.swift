@@ -44,6 +44,12 @@ enum CustomUsageCostConfiguration {
         formatter.locale = .current
         formatter.minimumFractionDigits = 3
         formatter.maximumFractionDigits = 3
+
+        if amount > 0, amount < 0.0005 {
+            let minimumVisibleAmount = formatter.string(from: NSNumber(value: 0.001)) ?? "0.001"
+            return "<\(minimumVisibleAmount)"
+        }
+
         return formatter.string(from: NSNumber(value: amount)) ?? "\(currencyCode) \(amount)"
     }
 }
