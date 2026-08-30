@@ -48,6 +48,8 @@ struct SettingsView: View {
                 generalSettings
             case .permissions:
                 PermissionsSettingsView()
+            case .apiCosts:
+                CustomUsageCostSettingsView()
             }
         }
     }
@@ -375,6 +377,7 @@ struct SettingsView: View {
 private enum SettingsTab: String, CaseIterable, Identifiable {
     case general
     case permissions
+    case apiCosts
 
     var id: String { rawValue }
 
@@ -384,6 +387,8 @@ private enum SettingsTab: String, CaseIterable, Identifiable {
             return String(localized: "General")
         case .permissions:
             return String(localized: "Permissions")
+        case .apiCosts:
+            return String(localized: "API Costs")
         }
     }
 }
