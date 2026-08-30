@@ -29,6 +29,9 @@ Abnahme. Im ersten Setup wurden keine Laufzeitfeatures verändert.
 - Hybrid preview: enable `Real-time` in the selected mode, keep `Live Text
   Display` enabled, and verify that Parakeet V3 text appears while speaking;
   after stopping, verify that the final saved text comes from OpenAI.
+- Hotkey recovery: after launching VoiceInk, granting Accessibility, waking the
+  Mac, or reconnecting a display, verify that the global recording shortcut
+  still starts and stops recording.
 - Fast check: `make check`
 - Full check: `./scripts/check`
 

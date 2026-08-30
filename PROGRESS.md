@@ -22,6 +22,8 @@
   Aufnahme und OpenAI Whisper v1 für das finale Ergebnis.
 - Der lokale Apple-Silicon-Build funktioniert mit `make local` und kopiert die
   signierte App nach `~/Downloads/VoiceInk.app`.
+- Die globale Shortcut-Registrierung versucht sich nach Berechtigungs- und
+  macOS-Lifecycle-Ereignissen automatisch erneut zu verbinden.
 
 ### Open
 
@@ -35,15 +37,15 @@
 
 ## Last verified
 
-- Date: 2026-08-29
-- Commit: `Add OpenAI Whisper cloud provider`
+- Date: 2026-08-30
+- Commit: `cd09036` (`Retry global shortcuts after permission and wake events`)
 - Branch: `custom/live_streaming`
 - Environment: local Apple-Silicon macOS, Xcode 26.6, Swift 6.3.3
 - Automated: `make check` passed; `make local` passed; App-Bundle erzeugt und
   nach `~/Downloads/VoiceInk.app` kopiert
 - Manual: none
 - Not verified: App launch, audio, permissions, device/user acceptance
-- Git status: changes ready for commit
+- Git status: clean after the hotkey-recovery commit
 
 ## Log
 
@@ -70,6 +72,15 @@
   korrekt `CUDA is disabled`; App wurde nach `~/Downloads/VoiceInk.app` kopiert.
 - Not changed: Keine VoiceInk-App-Quelldatei, kein Provider und keine
   Streaming-Implementierung.
+
+### 2026-08-30 — Hotkey-Recovery ergänzt
+
+- Changed: `RecordingShortcutManager` registriert den globalen Event-Tap nach
+  Aktivierung, Aufwachen und Display-Ereignissen erneut und wiederholt die
+  Registrierung kurzzeitig, falls macOS noch nicht bereit ist.
+- Verified: Lokaler Apple-Silicon-Xcode-Build erfolgreich; manuelle Hotkey- und
+  Overlay-Abnahme steht noch aus.
+- Git: `cd09036` (Hotkey-Recovery).
 
 ### 2026-08-29 — Orbit-Projekt und Folge-Tickets angelegt
 

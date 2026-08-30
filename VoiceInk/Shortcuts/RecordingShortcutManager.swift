@@ -1,4 +1,5 @@
 import AppKit
+import Combine
 import Foundation
 
 @MainActor
@@ -47,6 +48,8 @@ class RecordingShortcutManager: ObservableObject {
     private let modeShortcutManager: ModeShortcutManager
     private let shortcutMonitor = ShortcutMonitor()
     private var shortcutChangeObserver: NSObjectProtocol?
+    private var lifecycleCancellable: AnyCancellable?
+    private var shortcutRecoveryTask: Task<Void, Never>?
     private let shortcutModeHandler: RecordingShortcutModeHandler
     private let primaryRecordingShortcutModeSource: RecordingShortcutModeSource
 
@@ -152,21 +155,56 @@ class RecordingShortcutManager: ObservableObject {
             queue: .main
         ) { [weak self] _ in
             Task { @MainActor in
-                self?.refreshShortcutMonitoring()
+                self?.refreshShortcutMonitoringWithRecovery()
+            }
+        }
+
+        // Accessibility permission can be granted while the app is still running. In that
+        // case the event tap created during initialization may have failed already, so retry
+        // when macOS activates or wakes the app.
+        lifecycleCancellable = LifecycleObserver.shared.publisher(
+            for: [.applicationDidBecomeActive, .systemDidWake, .displaysDidWake]
+        ).sink { [weak self] _ in
+            Task { @MainActor in
+                self?.refreshShortcutMonitoringWithRecovery()
             }
         }
 
         Task { @MainActor in
             try? await Task.sleep(nanoseconds: 100_000_000)
-            self.refreshShortcutMonitoring()
+            self.refreshShortcutMonitoringWithRecovery()
         }
     }
 
-    private func refreshShortcutMonitoring() {
+    @discardableResult
+    private func refreshShortcutMonitoring(cancelPendingRecovery: Bool = true) -> Bool {
+        if cancelPendingRecovery {
+            shortcutRecoveryTask?.cancel()
+            shortcutRecoveryTask = nil
+        }
         removeAllMonitoring()
 
-        refreshShortcutMonitor()
+        let didInstallShortcutMonitor = refreshShortcutMonitor()
         setupMiddleClickMonitoring()
+        return didInstallShortcutMonitor
+    }
+
+    private func refreshShortcutMonitoringWithRecovery() {
+        guard !refreshShortcutMonitoring() else { return }
+
+        shortcutRecoveryTask = Task { @MainActor [weak self] in
+            // TCC updates and the WindowServer event tap can settle shortly after activation.
+            for _ in 0..<10 {
+                try? await Task.sleep(nanoseconds: 500_000_000)
+                guard !Task.isCancelled, let self else { return }
+
+                if self.refreshShortcutMonitoring(cancelPendingRecovery: false) {
+                    return
+                }
+            }
+
+            self?.shortcutRecoveryTask = nil
+        }
     }
 
     private func setupMiddleClickMonitoring() {
@@ -203,7 +241,8 @@ class RecordingShortcutManager: ObservableObject {
         middleClickMonitors = [downMonitor, upMonitor]
     }
 
-    private func refreshShortcutMonitor() {
+    @discardableResult
+    private func refreshShortcutMonitor() -> Bool {
         let primaryShortcut = primaryRecordingShortcut == .custom ? ShortcutStore.shortcut(for: .primaryRecording) : nil
         let secondaryShortcut =
             secondaryRecordingShortcut == .custom ? ShortcutStore.shortcut(for: .secondaryRecording) : nil
@@ -220,7 +259,7 @@ class RecordingShortcutManager: ObservableObject {
             interruptibleRecordingActions.insert(.secondaryRecording)
         }
 
-        shortcutMonitor.start(
+        return shortcutMonitor.start(
             shortcuts: shortcuts,
             interruptibleActions: interruptibleRecordingActions,
             onKeyDown: { [weak self] action, eventTime in
@@ -321,6 +360,8 @@ class RecordingShortcutManager: ObservableObject {
     }
 
     deinit {
+        shortcutRecoveryTask?.cancel()
+        lifecycleCancellable?.cancel()
         if let shortcutChangeObserver {
             NotificationCenter.default.removeObserver(shortcutChangeObserver)
         }

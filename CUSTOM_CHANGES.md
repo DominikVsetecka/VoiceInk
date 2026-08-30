@@ -43,6 +43,9 @@ configured as `origin`.
   the cloud-provider selection order.
 - `VoiceInk/Models/TranscriptionRealtimeSupport.swift` — exposes the hybrid
   preview as the existing per-mode realtime option.
+- `VoiceInk/Shortcuts/RecordingShortcutManager.swift` — retries global shortcut
+  registration after permission changes, app activation, wake, and display wake
+  so a temporarily unavailable macOS event tap does not leave shortcuts inactive.
 
 Existing VoiceInk services and providers remain unchanged. The listed files
 contain only the minimal integration points required for the new provider.
@@ -65,6 +68,8 @@ contain only the minimal integration points required for the new provider.
   integrations above.
 - An upstream change to realtime availability or session fallback behavior may
   affect the hybrid preview integration.
+- An upstream change to shortcut lifecycle handling or `LifecycleObserver` may
+  conflict with the small event-tap recovery integration above.
 
 ## Recommended future streaming architecture
 
