@@ -42,6 +42,6 @@ enum CustomUsageCostConfiguration {
         formatter.numberStyle = .currency
         formatter.currencyCode = currencyCode
         formatter.locale = .current
-        return formatter.string(from: NSNumber(value: amount)) ?? "(currencyCode) \(amount)"
+        return formatter.string(from: NSNumber(value: amount)) ?? "\(currencyCode) \(amount)"
     }
 }
