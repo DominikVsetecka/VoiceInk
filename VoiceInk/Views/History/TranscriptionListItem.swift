@@ -36,6 +36,18 @@ struct TranscriptionListItem: View {
                             )
                             .foregroundColor(.secondary)
                     }
+
+                    if let cost = CustomUsageCostCalculator.formattedCost(for: transcription) {
+                        Text(cost)
+                            .font(.system(size: 10, weight: .medium))
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 3)
+                            .background(
+                                RoundedRectangle(cornerRadius: 4, style: .continuous)
+                                    .fill(AppTheme.Surface.card)
+                            )
+                            .foregroundColor(.secondary)
+                    }
                 }
 
                 Text(transcription.enhancedText ?? transcription.text)

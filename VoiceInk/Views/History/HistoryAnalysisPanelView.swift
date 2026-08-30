@@ -6,6 +6,15 @@ struct HistoryAnalysisPanelView: View {
 
     private let analysis: HistoryPerformanceAnalysis
 
+    @AppStorage(CustomUsageCostConfiguration.isEnabledKey)
+    private var isCostAnalysisEnabled = CustomUsageCostConfiguration.defaultIsEnabled
+    @AppStorage(CustomUsageCostConfiguration.currencyCodeKey)
+    private var costCurrencyCode = CustomUsageCostConfiguration.defaultCurrencyCode
+    @AppStorage(CustomUsageCostConfiguration.openAIWhisperUSDPerMinuteKey)
+    private var openAIWhisperUSDPerMinute = CustomUsageCostConfiguration.defaultOpenAIWhisperUSDPerMinute
+    @AppStorage(CustomUsageCostConfiguration.usdToEURRateKey)
+    private var usdToEURRate = CustomUsageCostConfiguration.defaultUSDToEURRate
+
     init(transcriptions: [Transcription], onClose: @escaping () -> Void) {
         self.transcriptions = transcriptions
         self.onClose = onClose
@@ -51,11 +60,20 @@ struct HistoryAnalysisPanelView: View {
 
     @ViewBuilder
     private var content: some View {
-        if analysis.transcriptionRows.isEmpty && analysis.enhancementRows.isEmpty {
+        if analysis.transcriptionRows.isEmpty && analysis.enhancementRows.isEmpty
+            && (!CustomFeatureConfiguration.apiUsageCostEnabled
+                || !isCostAnalysisEnabled
+                || costSummary.rows.isEmpty)
+        {
             emptyState
         } else {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
+                    if CustomFeatureConfiguration.apiUsageCostEnabled && isCostAnalysisEnabled {
+                        CustomHistoryCostSection(summary: costSummary)
+                            .id("\(costCurrencyCode)-\(openAIWhisperUSDPerMinute)-\(usdToEURRate)")
+                    }
+
                     HistoryPerformanceSection(
                         title: "Transcription Models",
                         valueTitle: "Avg. latency",
@@ -77,6 +95,10 @@ struct HistoryAnalysisPanelView: View {
                 .padding(.bottom, 24)
             }
         }
+    }
+
+    private var costSummary: CustomUsageCostSummary {
+        CustomUsageCostCalculator.summary(for: transcriptions)
     }
 
     private var emptyState: some View {

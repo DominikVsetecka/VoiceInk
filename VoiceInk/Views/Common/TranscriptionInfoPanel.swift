@@ -45,6 +45,14 @@ struct TranscriptionInfoPanel: View {
                         value: duration.formatTiming()
                     )
                 }
+
+                if let cost = CustomUsageCostCalculator.formattedCost(for: transcription) {
+                    metadataRow(
+                        icon: "dollarsign.circle.fill",
+                        label: "Estimated API Cost",
+                        value: cost
+                    )
+                }
             }
 
             if let aiModel = transcription.aiEnhancementModelName {
