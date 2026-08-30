@@ -56,6 +56,8 @@ configured as `origin`.
   an optimized local build while retaining Refine.
 - `scripts/check` — runs the prerequisite check and the normal VoiceInk build.
 - `CUSTOM_CHANGES.md` — inventory and compatibility notes for this fork.
+- `HOW_TO_START.md` — shareable setup, build, installation, permissions, and
+  upstream-update instructions.
 - Project-start operational documentation: `AGENTS.md`, `CLAUDE.md`,
   `TESTING.md`, `PROGRESS.md`, `PLAN.md`, and `ROADMAP.md`.
 
