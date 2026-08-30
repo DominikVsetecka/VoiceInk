@@ -127,6 +127,20 @@ uploads the recorded audio to OpenAI Whisper v1 and replaces the preview with
 the final Whisper transcript. The OpenAI API is therefore used for the final
 transcription, not for continuous live streaming.
 
+## Optional focused recorder overlay
+
+To place the existing recorder overlay near the text field you are about to
+use:
+
+1. Open **Settings → Overlay**.
+2. Enable **Place recorder overlay near focused text field**.
+3. Focus an editable text field before starting a recording.
+
+VoiceInk reads only the focused field's position and size through macOS
+Accessibility. It does not read the field's text or keyboard input. If an app
+does not expose a usable editable Accessibility element, the normal overlay
+position is used automatically.
+
 If no live preview appears, check that Parakeet V3 is fully downloaded, that the
 mode uses **Whisper v1**, and that **Real-time** is enabled. If Parakeet is not
 available, VoiceInk can still use Whisper v1 as a normal batch transcription

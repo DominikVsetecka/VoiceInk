@@ -27,6 +27,11 @@ configured as `origin`.
   enough data, the existing cards show their normal empty states instead of a
   30-minute lock screen. The dashboard statistics remain local and update as
   new sessions are recorded.
+- The existing recorder overlay can optionally be placed near the focused
+  editable text field when a recording starts. The resolver reads only the
+  field geometry through macOS Accessibility; when an app does not expose a
+  usable editable element, the existing overlay position is used as fallback.
+  The setting is off by default and is available under Settings → Overlay.
 - Realtime streaming remains unchanged; `whisper-1` is batch-only.
 
 ## Fork-owned files
@@ -50,6 +55,16 @@ configured as `origin`.
   view includes an explicit `1 USD = … EUR` input, reset action, and example.
 - `VoiceInk/Custom/Features/PermissionsSettingsView.swift` — permission status
   and macOS System Settings actions available from the Settings tab.
+- `VoiceInk/Custom/Configuration/CustomOverlayConfiguration.swift` — user
+  default key and default state for focused text-field overlay placement.
+- `VoiceInk/Custom/Overlay/FocusedTextFieldResolver.swift` — resolves only the
+  focused editable element's screen geometry through Accessibility.
+- `VoiceInk/Custom/Overlay/FocusedOverlayPlacement.swift` — calculates a
+  screen-safe position near the focused field and clamps it to the visible
+  display frame.
+- `VoiceInk/Custom/Features/FocusedOverlaySettingsView.swift` — settings UI
+  for enabling the optional placement behavior and explaining its privacy
+  boundary.
 - `Makefile` remains the local build entry point; its local target contains the
   minimal Xcode/package settings needed for this Apple-Silicon checkout,
   re-signs embedded local-build code consistently, and `local-release` provides
@@ -101,6 +116,10 @@ configured as `origin`.
 - `VoiceInk/Views/Dashboard/DashboardContent.swift` — removes the upstream
   30-minute gating for the local Dashboard Insights view; empty cards remain
   visible until data exists.
+- `VoiceInk/Views/Recorder/MiniRecorderPanel.swift` — adds the focused-field
+  placement result at the existing panel `show()` integration point.
+- `VoiceInk/Views/Recorder/NotchRecorderPanel.swift` — adds the same small
+  placement integration for the Notch panel style.
 
 Existing VoiceInk services and providers remain unchanged. The listed files
 contain only the minimal integration points required for the new provider.
@@ -137,6 +156,12 @@ contain only the minimal integration points required for the new provider.
   an independent complete-history query and does not depend on pagination.
 - An upstream change to DashboardContent's Insights gating or dashboard state
   loading may conflict with the small unlock-policy integration above.
+- An upstream change to either recorder panel's `show()` method or screen
+  coordinate handling may conflict with the focused overlay placement call.
+- Accessibility support differs between applications. Browser inputs and native
+  text fields are expected to work most often; custom canvases, secure fields,
+  terminals, or apps that expose no editable Accessibility element use the
+  existing overlay position instead.
 - Cost estimates intentionally use current user-configured rates and are not
   invoice-accurate historical records yet. A future exact-history implementation
   would need a fork-owned usage record with a price snapshot per API request.

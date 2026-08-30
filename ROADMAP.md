@@ -22,6 +22,7 @@ Ziel: stabile, dokumentierte Fork-Basis.
 - Reproduzierbarer Baseline-Build
 - Optimierter lokaler Release-Build mit erhaltenem VoiceInk Refine
 - Lokale API-Kostenschätzung für OpenAI Whisper in der History
+- Optionales fokussiertes Overlay nahe dem aktiven Eingabefeld
 
 Exit criteria:
 
@@ -41,6 +42,8 @@ Ziel: Kostenanzeige und Provider-Erweiterungen weiter belastbar machen.
 
 - Kontext-Injektion über bestehende Request-/Mode-Abstraktionen
 - Provider-spezifische Konfiguration und Tests
+- Manuelle Kompatibilitätsprüfung der Overlay-Positionierung in Chrome,
+  TextEdit und Apps ohne editierbares Accessibility-Element
 
 ## Explicit non-goals
 

@@ -42,6 +42,11 @@
 - Dashboard Insights sind ab dem ersten Start zugänglich. Ohne Daten zeigen die
   vorhandenen Karten leere Zustände; die frühere 30-Minuten-Sperre wurde an
   einem kleinen Dashboard-Integrationspunkt entfernt.
+- Das bestehende Recorder-Overlay kann optional beim Aufnahmestart nahe dem
+  fokussierten Eingabefeld platziert werden. Die Funktion nutzt nur die
+  Accessibility-Geometrie des Feldes, ist standardmäßig deaktiviert und fällt
+  bei nicht unterstützten Apps auf die normale Position zurück. Die Einstellung
+  befindet sich unter Settings → Overlay.
 
 ### Open
 
@@ -64,6 +69,8 @@
   installiert; Codesignatur geprüft
 - Manual: none
 - Not verified: App launch, audio, permissions, device/user acceptance
+- Not verified: focused-overlay behavior in Chrome, TextEdit, and apps without
+  an exposed editable Accessibility element
 - Git status: clean after the all-history cost overview changes
 
 ## Log
@@ -155,6 +162,22 @@
   Empty States. Es werden keine künstlichen Statistikwerte erzeugt.
 - Verified: `make local-release` erfolgreich; die aktualisierte App wurde nach
   `/Applications/VoiceInk.app` installiert und die Signatur geprüft.
+
+### 2026-08-30 — Optionales Overlay nahe fokussiertem Textfeld ergänzt
+
+- Changed: Neuer fork-eigener Accessibility-Resolver liest ausschließlich die
+  Position und Größe des fokussierten editierbaren UI-Elements.
+- Changed: Das vorhandene Mini- und Notch-Overlay nutzt beim Anzeigen die neue
+  Positionierung; bei fehlender Accessibility-Geometrie bleibt die bisherige
+  Position erhalten.
+- Changed: Neuer Settings-Tab `Overlay`; die Funktion ist standardmäßig aus.
+- Decision: Positionierung erfolgt einmalig beim Aufnahmestart, damit das
+  Overlay während der Aufnahme nicht störend springt. Eine spätere
+  Fokuswechsel-Nachführung bleibt optional.
+- Verified: `make local-release` erfolgreich; CudaBuild meldet auf macOS
+  weiterhin `CUDA is disabled`; App-Bundle wurde nach `~/Downloads/VoiceInk.app`
+  kopiert.
+- Not verified: manuelle Abnahme in einzelnen Ziel-Apps steht noch aus.
 
 ### 2026-08-29 — Orbit-Projekt und Folge-Tickets angelegt
 

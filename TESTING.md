@@ -49,6 +49,12 @@ Abnahme. Im ersten Setup wurden keine Laufzeitfeatures verändert.
   all-history overview above the list with total Whisper minutes and cost.
   Then select all history entries and open Analysis to verify the separate
   selected-entry aggregate.
+- Focused overlay placement: open Settings → Overlay, enable `Place recorder
+  overlay near focused text field`, focus a text field in Chrome or TextEdit,
+  start a recording, and verify that the existing recorder overlay appears near
+  that field. Repeat with the setting disabled and verify the normal position.
+  Also test an app that exposes no editable Accessibility element and verify
+  that recording still works with the normal-position fallback.
 - Onboarding skip: reset onboarding, select Skip Setup, confirm, and verify that
   the app opens normally and permissions remain manageable from Settings.
 - Fast check: `make check`
