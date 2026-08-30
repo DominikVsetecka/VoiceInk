@@ -18,8 +18,9 @@ configured as `origin`.
 - Costs are visible per history entry, in the transcription details, and as a
   total for the selected history entries in both the main-window history and
   the separate History window. Cost values use three decimal places so the
-  Whisper v1 rate of `0.006 USD/min` remains visible. The complete history can
-  be selected through the existing `Select All` action.
+  Whisper v1 rate of `0.006 USD/min` remains visible; amounts below `0.001`
+  are shown as `<0.001`. The complete history can be selected through the
+  existing `Select All` action.
 - Realtime streaming remains unchanged; `whisper-1` is batch-only.
 
 ## Fork-owned files

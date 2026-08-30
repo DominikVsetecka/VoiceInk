@@ -120,6 +120,7 @@ kompilieren.
 - When: History-Eintrag öffnen und danach `Select All` → `Analyze` verwenden
 - Expected: Einzelkosten mit drei Nachkommastellen, gesamte Whisper-Minuten und
   eine geschätzte Gesamtsumme werden in beiden History-Ansichten angezeigt;
+  sehr kleine positive Beträge erscheinen als `<0,001` statt als `0,000`, und
   lokale Modelle erscheinen nicht als kostenpflichtig.
 - Evidence: Anzeige mit dem konfigurierten Preis pro Minute gegenrechnen.
 

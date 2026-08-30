@@ -33,7 +33,8 @@
   in den Details und aggregiert für ausgewählte Einträge in beiden History-
   Ansichten; Preis und Währung sind in Settings → API Costs konfigurierbar. Die
   EUR-Umrechnung hat ein eigenes Eingabefeld für `1 USD = … EUR`, Reset und eine
-  Beispielrechnung. Beträge werden mit drei Nachkommastellen angezeigt.
+  Beispielrechnung. Beträge werden mit drei Nachkommastellen angezeigt; kleinere
+  positive Beträge werden als `<0,001` ausgewiesen.
 
 ### Open
 
