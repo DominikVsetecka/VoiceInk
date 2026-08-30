@@ -50,6 +50,8 @@ struct SettingsView: View {
                 PermissionsSettingsView()
             case .apiCosts:
                 CustomUsageCostSettingsView()
+            case .overlay:
+                FocusedOverlaySettingsView()
             }
         }
     }
@@ -378,6 +380,7 @@ private enum SettingsTab: String, CaseIterable, Identifiable {
     case general
     case permissions
     case apiCosts
+    case overlay
 
     var id: String { rawValue }
 
@@ -389,6 +392,8 @@ private enum SettingsTab: String, CaseIterable, Identifiable {
             return String(localized: "Permissions")
         case .apiCosts:
             return String(localized: "API Costs")
+        case .overlay:
+            return String(localized: "Overlay")
         }
     }
 }

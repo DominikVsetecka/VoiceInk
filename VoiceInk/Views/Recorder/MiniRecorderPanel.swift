@@ -65,7 +65,12 @@ class MiniRecorderPanel: NSPanel {
             return false
         }
 
-        setFrame(metrics, display: true)
+        let frame = CustomFocusedOverlayPlacement.frame(
+            defaultFrame: metrics,
+            focusedTextFieldFrame: CustomFocusedTextFieldResolver.resolve()
+        )
+
+        setFrame(frame, display: true)
         orderFrontRegardless()
 
         logger.notice(

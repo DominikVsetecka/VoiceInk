@@ -77,7 +77,12 @@ class NotchRecorderPanel: KeyablePanel {
             return false
         }
 
-        setFrame(metrics.frame, display: true)
+        let frame = CustomFocusedOverlayPlacement.frame(
+            defaultFrame: metrics.frame,
+            focusedTextFieldFrame: CustomFocusedTextFieldResolver.resolve()
+        )
+
+        setFrame(frame, display: true)
         orderFrontRegardless()
 
         logger.notice(

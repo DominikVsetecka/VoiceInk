@@ -19,4 +19,7 @@ enum CustomFeatureConfiguration {
 
     /// Reserved for a future custom streaming provider experiment.
     static let liveStreamingEnabled = false
+
+    /// Enables the optional focused-text-field placement for the existing recorder overlay.
+    static let focusedTextFieldOverlayEnabled = true
 }
