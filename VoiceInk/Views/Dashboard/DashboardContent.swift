@@ -11,8 +11,6 @@ struct DashboardContent: View {
     private static let displayNameMinWidth: CGFloat = 72
     private static let displayNameMaxWidth: CGFloat = 280
     private static let displayNameHorizontalPadding: CGFloat = 8
-    private static let insightsUnlockDuration: TimeInterval = 30 * 60
-    private static let peakHoursUnlockDuration: TimeInterval = 30 * 60
     // Above this count, skip live auto-refresh (full reload is expensive); tab reopen still refreshes.
     private static let automaticStatsRefreshMetricLimit = 2_000
     private static let statsRefreshDebounceNanoseconds: UInt64 = 750_000_000
@@ -233,19 +231,15 @@ struct DashboardContent: View {
     }
 
     private var canViewInsights: Bool {
-        hasLoadedStatsSnapshot && statsSummary.totalDuration >= Self.insightsUnlockDuration
+        true
     }
 
     private var shouldShowLockedInsightsState: Bool {
-        hasLoadedStatsSnapshot && !canViewInsights
-    }
-
-    private var canViewPeakHours: Bool {
-        hasLoadedStatsSnapshot && selectedTotals.duration >= Self.peakHoursUnlockDuration && selectedPeakHours.hasData
+        false
     }
 
     private var shouldLockPeakHours: Bool {
-        hasLoadedStatsSnapshot && !canViewPeakHours
+        false
     }
 
     private var shouldRefreshStatsAfterMetricChange: Bool {
