@@ -82,6 +82,19 @@ local: check setup
 		build
 	@APP_PATH="$(LOCAL_DERIVED_DATA)/Build/Products/$(LOCAL_CONFIGURATION)/VoiceInk.app" && \
 	if [ -d "$$APP_PATH" ]; then \
+		SIGNING_IDENTITY=$$(security find-identity -v -p codesigning 2>/dev/null | awk '/"Apple Development: / { print $$2; exit }'); \
+		if [ -z "$$SIGNING_IDENTITY" ]; then \
+			SIGNING_IDENTITY="-"; \
+			echo "No Apple Development identity found; using ad-hoc signing"; \
+		else \
+			echo "Re-signing embedded local-build code with: $$SIGNING_IDENTITY"; \
+		fi; \
+		find "$$APP_PATH/Contents" -depth -type d \( -name '*.app' -o -name '*.xpc' -o -name '*.framework' -o -name '*.bundle' \) -print | while IFS= read -r CODE_BUNDLE; do \
+			codesign --force --options runtime --timestamp=none --sign "$$SIGNING_IDENTITY" "$$CODE_BUNDLE" || exit 1; \
+		done; \
+		codesign --force --options runtime --timestamp=none \
+			--entitlements "$(CURDIR)/VoiceInk/VoiceInk.local.entitlements" \
+			--sign "$$SIGNING_IDENTITY" "$$APP_PATH"; \
 		echo "Copying VoiceInk.app to ~/Downloads..."; \
 		rm -rf "$$HOME/Downloads/VoiceInk.app"; \
 		ditto "$$APP_PATH" "$$HOME/Downloads/VoiceInk.app"; \

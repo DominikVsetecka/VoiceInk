@@ -51,8 +51,9 @@ configured as `origin`.
 - `VoiceInk/Custom/Features/PermissionsSettingsView.swift` — permission status
   and macOS System Settings actions available from the Settings tab.
 - `Makefile` remains the local build entry point; its local target contains the
-  minimal Xcode/package settings needed for this Apple-Silicon checkout, and
-  `local-release` provides an optimized local build while retaining Refine.
+  minimal Xcode/package settings needed for this Apple-Silicon checkout,
+  re-signs embedded local-build code consistently, and `local-release` provides
+  an optimized local build while retaining Refine.
 - `scripts/check` — runs the prerequisite check and the normal VoiceInk build.
 - `CUSTOM_CHANGES.md` — inventory and compatibility notes for this fork.
 - Project-start operational documentation: `AGENTS.md`, `CLAUDE.md`,
@@ -60,10 +61,14 @@ configured as `origin`.
 
 ## Original VoiceInk files changed
 
-- `Makefile` — adds the local Xcode package/macro validation switches and
-  preserves `CRYPTO_IN_SWIFTPM` when enabling the local build condition. This
-  is required because the current Xcode/SwiftPM combination otherwise tries to
-  resolve unused `swift-crypto` BoringSSL modules on macOS.
+- `Makefile` — adds the local Xcode package/macro validation switches, preserves
+  `CRYPTO_IN_SWIFTPM` when enabling the local build condition, and consistently
+  re-signs embedded frameworks/XPC components with the local app signature.
+  This is required because the current Xcode/SwiftPM combination otherwise
+  produces a locally signed app whose embedded `whisper.framework` can be
+  rejected by `dyld` for having a different Team ID.
+- `.gitignore` — ignores the release-specific derived-data directory created by
+  `local-release`, keeping generated build output out of the fork.
 - `VoiceInk/Models/TranscriptionModel.swift` — adds the `OpenAI` provider enum
   case required by the new cloud model.
 - `VoiceInk/Transcription/Cloud/CloudProvider.swift` — adds the provider
