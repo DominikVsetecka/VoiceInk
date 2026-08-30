@@ -39,6 +39,9 @@
   all-history Übersicht mit den bisher verarbeiteten Whisper-v1-Minuten und dem
   Gesamtbetrag in der aktuell gewählten Währung. Die Übersicht fragt die
   vollständige SwiftData-History unabhängig von der Seitenpagination ab.
+- Dashboard Insights sind ab dem ersten Start zugänglich. Ohne Daten zeigen die
+  vorhandenen Karten leere Zustände; die frühere 30-Minuten-Sperre wurde an
+  einem kleinen Dashboard-Integrationspunkt entfernt.
 
 ### Open
 
@@ -53,7 +56,7 @@
 ## Last verified
 
 - Date: 2026-08-30
-- Commit: `56fc675` (`Document all-history Whisper cost overview`)
+- Commit: `c7d02e2` (`Unlock dashboard insights from first launch`)
 - Branch: `custom/live_streaming`
 - Environment: local Apple-Silicon macOS, Xcode 26.6, Swift 6.3.3
 - Automated: `make local-release` passed; App-Bundle erzeugt, nach
@@ -141,6 +144,15 @@
 - Decision: Die Übersicht fragt alle Transcription-Datensätze unabhängig von der
   paginierten oder gefilterten Liste ab; die bestehende Auswahl-Analyse bleibt
   davon getrennt.
+- Verified: `make local-release` erfolgreich; die aktualisierte App wurde nach
+  `/Applications/VoiceInk.app` installiert und die Signatur geprüft.
+
+### 2026-08-30 — Dashboard Insights ab dem ersten Start zugänglich
+
+- Changed: Die 30-Minuten-Gating-Logik des bestehenden Dashboard-Insights-
+  Bereichs wurde entfernt; der Bereich ist sofort öffnbar.
+- Decision: Karten ohne Messdaten bleiben sichtbar und zeigen ihre vorhandenen
+  Empty States. Es werden keine künstlichen Statistikwerte erzeugt.
 - Verified: `make local-release` erfolgreich; die aktualisierte App wurde nach
   `/Applications/VoiceInk.app` installiert und die Signatur geprüft.
 

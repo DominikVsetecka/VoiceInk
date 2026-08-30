@@ -33,6 +33,11 @@ Abnahme. Im ersten Setup wurden keine Laufzeitfeatures verändert.
 - Hotkey recovery: after launching VoiceInk, granting Accessibility, waking the
   Mac, or reconnecting a display, verify that the global recording shortcut
   still starts and stops recording.
+- Dashboard Insights: open the Dashboard immediately after launch, choose View
+  Insights, and verify that the productivity, time-saved, model-usage, model-
+  performance, and peak-hours cards are visible. With no data they should show
+  empty states rather than a 30-minute lock screen; after recording, refresh
+  and verify that local statistics populate.
 - Permissions settings: open Settings → Permissions, verify the three current
   status values, use Refresh, and open each corresponding macOS settings pane.
 - API cost settings: open Settings → API Costs, verify the default Whisper v1

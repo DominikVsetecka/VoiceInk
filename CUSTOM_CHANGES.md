@@ -23,6 +23,10 @@ configured as `origin`.
   four decimal places so the per-second Whisper v1 value of `0.0001 USD`
   remains visible; amounts below `0.0001` are shown as `<0.0001`. The complete
   history can still be selected through the existing `Select All` action.
+- Dashboard Insights are available from the first launch. When there is not yet
+  enough data, the existing cards show their normal empty states instead of a
+  30-minute lock screen. The dashboard statistics remain local and update as
+  new sessions are recorded.
 - Realtime streaming remains unchanged; `whisper-1` is batch-only.
 
 ## Fork-owned files
@@ -87,6 +91,9 @@ configured as `origin`.
 - `VoiceInk/Shortcuts/RecordingShortcutManager.swift` — retries global shortcut
   registration after permission changes, app activation, wake, and display wake
   so a temporarily unavailable macOS event tap does not leave shortcuts inactive.
+- `VoiceInk/Views/Dashboard/DashboardContent.swift` — removes the upstream
+  30-minute gating for the local Dashboard Insights view; empty cards remain
+  visible until data exists.
 
 Existing VoiceInk services and providers remain unchanged. The listed files
 contain only the minimal integration points required for the new provider.
@@ -121,6 +128,8 @@ contain only the minimal integration points required for the new provider.
 - An upstream change to the pagination or layout of either History view may
   conflict with the small overview insertion points; the overview itself uses
   an independent complete-history query and does not depend on pagination.
+- An upstream change to DashboardContent's Insights gating or dashboard state
+  loading may conflict with the small unlock-policy integration above.
 - Cost estimates intentionally use current user-configured rates and are not
   invoice-accurate historical records yet. A future exact-history implementation
   would need a fork-owned usage record with a price snapshot per API request.
