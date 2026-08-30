@@ -12,6 +12,12 @@ configured as `origin`.
 - It uses the existing `CloudProvider` contract and LLMkit's
   `OpenAITranscriptionClient`.
 - It can be disabled through `CustomFeatureConfiguration.openAIWhisperEnabled`.
+- Local estimated API usage costs are shown for supported cloud transcription
+  models, currently OpenAI Whisper v1. The estimate uses the recorded audio
+  duration and an editable per-minute rate; local models are not charged.
+- Costs are visible per history entry, in the transcription details, and as a
+  total for the selected history entries. The complete history can be selected
+  through the existing `Select All` action.
 - Realtime streaming remains unchanged; `whisper-1` is batch-only.
 
 ## Fork-owned files
@@ -22,6 +28,14 @@ configured as `origin`.
   provider implementation.
 - `VoiceInk/Custom/Streaming/OpenAIWhisperLocalPreviewProvider.swift` — local
   Parakeet V3 preview with OpenAI batch fallback.
+- `VoiceInk/Custom/Usage/CustomUsageCostConfiguration.swift` — user-configurable
+  pricing, currency, and display settings for cost estimates.
+- `VoiceInk/Custom/Usage/CustomUsageCostCalculator.swift` — calculates local
+  per-recording and aggregate estimates without changing the SwiftData schema.
+- `VoiceInk/Views/History/CustomHistoryCostSection.swift` — cost summary for
+  selected history entries.
+- `VoiceInk/Views/Settings/CustomUsageCostSettingsView.swift` — API cost settings
+  for enabling the display, changing the rate, and choosing USD/EUR.
 - `VoiceInk/Custom/Features/PermissionsSettingsView.swift` — permission status
   and macOS System Settings actions available from the Settings tab.
 - `Makefile` remains the local build entry point; its local target contains the
@@ -47,7 +61,14 @@ configured as `origin`.
 - `VoiceInk/Models/TranscriptionRealtimeSupport.swift` — exposes the hybrid
   preview as the existing per-mode realtime option.
 - `VoiceInk/Views/Settings/SettingsView.swift` — adds General and Permissions
-  tabs while keeping the existing settings form intact.
+  tabs while keeping the existing settings form intact; also registers the
+  fork-owned API Costs tab.
+- `VoiceInk/Views/History/HistoryAnalysisPanelView.swift` — adds the fork-owned
+  aggregate cost section to the existing analysis panel.
+- `VoiceInk/Views/History/TranscriptionListItem.swift` — adds a small estimated
+  cost badge to supported cloud transcription entries.
+- `VoiceInk/Views/Common/TranscriptionInfoPanel.swift` — adds the estimated cost
+  to the existing transcription metadata panel.
 - `VoiceInk/Views/Onboarding/OnboardingView.swift` — adds a confirmation-based
   setup skip action; skipped setup can be completed later in Settings.
 - `VoiceInk/Shortcuts/RecordingShortcutManager.swift` — retries global shortcut
@@ -82,6 +103,11 @@ contain only the minimal integration points required for the new provider.
   conflict with the small event-tap recovery integration above.
 - An upstream change to onboarding layout or SettingsView structure may
   conflict with the small navigation integrations above.
+- An upstream change to the History analysis/list/detail views or SettingsView
+  structure may conflict with the small cost-display integration points above.
+- Cost estimates intentionally use current user-configured rates and are not
+  invoice-accurate historical records yet. A future exact-history implementation
+  would need a fork-owned usage record with a price snapshot per API request.
 
 ## Recommended future streaming architecture
 

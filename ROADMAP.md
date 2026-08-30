@@ -21,6 +21,7 @@ Ziel: stabile, dokumentierte Fork-Basis.
 - Zentrale, deaktivierte Feature-Konfiguration
 - Reproduzierbarer Baseline-Build
 - Optimierter lokaler Release-Build mit erhaltenem VoiceInk Refine
+- Lokale API-Kostenschätzung für OpenAI Whisper in der History
 
 Exit criteria:
 
@@ -30,8 +31,11 @@ Exit criteria:
 
 ## Next horizon
 
-Ziel: eigenen Streaming-Provider als getrennten, kleinen Implementierungsblock
-untersuchen und über bestehende Protocols integrieren.
+Ziel: Kostenanzeige und Provider-Erweiterungen weiter belastbar machen.
+
+- Historische Preis-Snapshots pro API-Nutzung untersuchen
+- Danach eigenen Streaming-Provider als getrennten, kleinen Implementierungsblock
+  über bestehende Protocols integrieren
 
 ## Later / explore
 

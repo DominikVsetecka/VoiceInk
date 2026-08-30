@@ -3,7 +3,7 @@
 ## Orbit refs
 
 - Project: `voiceink_fork`
-- Active tickets: `ORB-0177`, `ORB-0178`
+- Active tickets: `ORB-0177`, `ORB-0178`, `ORB-0180`
 - Decisions: none
 
 ## Current state
@@ -29,6 +29,9 @@
 - Berechtigungen können nun in einem eigenen Settings-Tab geprüft und erneut in
   den macOS-Systemeinstellungen geöffnet werden; das Onboarding kann übersprungen
   werden.
+- Die lokale API-Kostenschätzung zeigt OpenAI-Whisper-Kosten pro History-Eintrag,
+  in den Details und aggregiert für ausgewählte Einträge; Preis und Währung sind
+  in Settings → API Costs konfigurierbar.
 
 ### Open
 
@@ -96,6 +99,19 @@
   ersetzt.
 - Verified: Separater Release-Vergleich erfolgreich; Bundle-Größe ca. 146 MB
   statt ca. 205 MB im installierten Debug-Build.
+
+### 2026-08-30 — Lokale API-Kostenschätzung ergänzt
+
+- Changed: Fork-eigene Kostenkonfiguration und Berechnung unter
+  `VoiceInk/Custom/Usage/` ergänzt; bestehende Transcription-SwiftData-Struktur
+  bleibt unverändert.
+- Changed: Kostenbadge für einzelne OpenAI-Whisper-Einträge sowie aggregierte
+  Anzeige im bestehenden History-Analysepanel und ein eigener Settings-Tab.
+- Decision: Erste Version bleibt bewusst eine lokale Schätzung. Historische
+  Preis-Snapshots und ein direkter OpenAI-Usage-Abgleich bleiben spätere Schritte.
+- Verified: `make local-release` erfolgreich; App aktualisiert und signiert nach
+  `/Applications/VoiceInk.app`.
+- Orbit: `ORB-0180` erledigt.
 
 ### 2026-08-29 — Orbit-Projekt und Folge-Tickets angelegt
 

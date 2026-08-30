@@ -35,6 +35,11 @@ Abnahme. Im ersten Setup wurden keine Laufzeitfeatures verändert.
   still starts and stops recording.
 - Permissions settings: open Settings → Permissions, verify the three current
   status values, use Refresh, and open each corresponding macOS settings pane.
+- API cost settings: open Settings → API Costs, verify the default Whisper v1
+  rate, switch USD/EUR, and confirm that disabling the display hides cost labels.
+- History API costs: use OpenAI / Whisper v1 for a short recording, verify a
+  cost badge on the history entry and its detail panel, then select all history
+  entries and open Analysis to verify the aggregate minutes and estimated cost.
 - Onboarding skip: reset onboarding, select Skip Setup, confirm, and verify that
   the app opens normally and permissions remain manageable from Settings.
 - Fast check: `make check`
@@ -106,8 +111,20 @@ kompilieren.
 - Expected: Verhalten entspricht dem unveränderten Upstream-Stand
 - Evidence: manuelle Prüfung, derzeit offen
 
+### Scenario 4 — Local API cost estimate
+
+- Environment: gebaute macOS-App mit OpenAI Whisper v1 und aktiviertem API-Costs-Tab
+- Given: mindestens eine erfolgreich über OpenAI transkribierte Aufnahme
+- When: History-Eintrag öffnen und danach `Select All` → `Analyze` verwenden
+- Expected: Einzelkosten, gesamte Whisper-Minuten und eine geschätzte Gesamtsumme
+  werden angezeigt; lokale Modelle erscheinen nicht als kostenpflichtig.
+- Evidence: Anzeige mit dem konfigurierten Preis pro Minute gegenrechnen.
+
 ## Warnings and limitations
 
 - Erster Build kann externe Netzwerk- und Toolchain-Voraussetzungen benötigen.
 - Signierung, tatsächlicher App-Start, Audio-Berechtigungen und Transkription
   wurden in diesem Setup noch nicht verifiziert.
+- Die API-Kostenanzeige ist eine lokale Schätzung auf Basis der gespeicherten
+  Audiodauer; ein direkter Abgleich mit der OpenAI-Rechnung ist nicht Teil dieser
+  ersten Version.
