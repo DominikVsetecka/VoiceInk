@@ -14,6 +14,9 @@ enum CustomFeatureConfiguration {
     /// Uses local Parakeet V3 for the live preview while OpenAI remains final.
     static let openAIWhisperLocalPreviewEnabled = true
 
+    /// Shows local estimated API usage costs for supported cloud transcription models.
+    static let apiUsageCostEnabled = true
+
     /// Reserved for a future custom streaming provider experiment.
     static let liveStreamingEnabled = false
 }
