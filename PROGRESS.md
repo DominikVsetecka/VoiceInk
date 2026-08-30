@@ -33,8 +33,8 @@
   in den Details und aggregiert für ausgewählte Einträge in beiden History-
   Ansichten; Preis und Währung sind in Settings → API Costs konfigurierbar. Die
   EUR-Umrechnung hat ein eigenes Eingabefeld für `1 USD = … EUR`, Reset und eine
-  Beispielrechnung. Beträge werden mit drei Nachkommastellen angezeigt; kleinere
-  positive Beträge werden als `<0,001` ausgewiesen.
+  Beispielrechnung. Beträge werden mit vier Nachkommastellen angezeigt; kleinere
+  positive Beträge werden als `<0,0001` ausgewiesen.
 
 ### Open
 
@@ -120,8 +120,8 @@
 
 - Changed: Die Kostenanzeige wurde auch in die History-Karten des Hauptfensters
   integriert; das separate History-Fenster zeigt sie weiterhin.
-- Changed: Währungsbeträge verwenden drei Nachkommastellen, damit kleine
-  Whisper-Kosten wie `0,006` sichtbar bleiben.
+- Changed: Währungsbeträge verwenden vier Nachkommastellen, damit der
+  sekundenbasierte Whisper-Wert `0,0001 USD` sichtbar bleibt.
 - Decision: Die lokale Schätzung rechnet sekundenbasiert (`Sekunden / 60 × Preis`),
   weil OpenAI die verarbeiteten Sekunden in den Usage-Daten ausweist. Eine
   Aufrundung jeder angefangenen Minute wird nicht angenommen.

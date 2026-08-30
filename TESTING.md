@@ -39,7 +39,7 @@ Abnahme. Im ersten Setup wurden keine Laufzeitfeatures verändert.
   rate, switch USD/EUR, enter a custom `1 USD = … EUR` rate, use Reset, and
   confirm that disabling the display hides cost labels.
 - History API costs: use OpenAI / Whisper v1 for a short recording, verify a
-  three-decimal cost badge in both the main-window History and the separate
+  four-decimal cost badge in both the main-window History and the separate
   History window, verify the detail panel, then select all history entries and
   open Analysis to verify aggregate minutes and estimated cost.
 - Onboarding skip: reset onboarding, select Skip Setup, confirm, and verify that
@@ -118,9 +118,9 @@ kompilieren.
 - Environment: gebaute macOS-App mit OpenAI Whisper v1 und aktiviertem API-Costs-Tab
 - Given: mindestens eine erfolgreich über OpenAI transkribierte Aufnahme
 - When: History-Eintrag öffnen und danach `Select All` → `Analyze` verwenden
-- Expected: Einzelkosten mit drei Nachkommastellen, gesamte Whisper-Minuten und
+- Expected: Einzelkosten mit vier Nachkommastellen, gesamte Whisper-Minuten und
   eine geschätzte Gesamtsumme werden in beiden History-Ansichten angezeigt;
-  sehr kleine positive Beträge erscheinen als `<0,001` statt als `0,000`, und
+  sehr kleine positive Beträge erscheinen als `<0,0001` statt als `0,0000`, und
   lokale Modelle erscheinen nicht als kostenpflichtig.
 - Evidence: Anzeige mit dem konfigurierten Preis pro Minute gegenrechnen.
 
