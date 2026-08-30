@@ -100,6 +100,42 @@ an `.env` file.
 transcript. Parakeet V3 can optionally provide a local live preview while you
 are speaking. The existing VoiceInk streaming architecture remains in use.
 
+## Configure Parakeet V3 + OpenAI Whisper v1
+
+The hybrid setup uses two models for one recording:
+
+- Parakeet V3 runs locally and shows the live preview while you speak.
+- OpenAI Whisper v1 receives the recorded audio after you stop and provides the
+  authoritative final transcript.
+
+Configure it in the app as follows:
+
+1. Open **AI Models** in the VoiceInk sidebar.
+2. In the **Local** section, find **Parakeet V3** and click **Download**.
+   Wait until the model is shown as downloaded. The model is stored locally and
+   does not require an API key.
+3. In **AI Models**, open the **Cloud** section and select **OpenAI**.
+4. Enter your OpenAI API key, click **Test connection**, and confirm that the
+   connection is verified. The key is stored in the macOS Keychain.
+5. Open **Modes** and edit the mode you use for dictation.
+6. In the **Transcription** section, set **Model** to **Whisper v1**.
+7. Enable the **Real-time** toggle and save the mode.
+
+After this setup, start a recording with that mode. Parakeet V3 should display
+the running text locally during the recording. When recording stops, VoiceInk
+uploads the recorded audio to OpenAI Whisper v1 and replaces the preview with
+the final Whisper transcript. The OpenAI API is therefore used for the final
+transcription, not for continuous live streaming.
+
+If no live preview appears, check that Parakeet V3 is fully downloaded, that the
+mode uses **Whisper v1**, and that **Real-time** is enabled. If Parakeet is not
+available, VoiceInk can still use Whisper v1 as a normal batch transcription
+model.
+
+The optional cost display can be configured under **Settings → API Costs**.
+This does not affect transcription; it only calculates a local estimate based
+on the recorded duration and your configured Whisper price.
+
 ## Update the app after changes
 
 After making changes to the fork, build and install it again:
