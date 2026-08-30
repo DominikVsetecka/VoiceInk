@@ -513,9 +513,37 @@ private struct HistoryCardRow: View {
                 .labelsHidden()
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(transcription.timestamp, format: .dateTime.month(.abbreviated).day().hour().minute())
-                        .font(.system(size: 11, weight: .medium))
-                        .foregroundColor(.secondary)
+                    HStack(spacing: 6) {
+                        Text(transcription.timestamp, format: .dateTime.month(.abbreviated).day().hour().minute())
+                            .font(.system(size: 11, weight: .medium))
+                            .foregroundColor(.secondary)
+
+                        Spacer()
+
+                        if transcription.duration > 0 {
+                            Text(transcription.duration.formatTiming())
+                                .font(.system(size: 10, weight: .medium))
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 3)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 4, style: .continuous)
+                                        .fill(AppTheme.Surface.card)
+                                )
+                                .foregroundColor(.secondary)
+                        }
+
+                        if let cost = CustomUsageCostCalculator.formattedCost(for: transcription) {
+                            Text(cost)
+                                .font(.system(size: 10, weight: .medium))
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 3)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 4, style: .continuous)
+                                        .fill(AppTheme.Surface.card)
+                                )
+                                .foregroundColor(.secondary)
+                        }
+                    }
 
                     if !isExpanded {
                         Text(transcription.enhancedText ?? transcription.text)

@@ -42,6 +42,8 @@ enum CustomUsageCostConfiguration {
         formatter.numberStyle = .currency
         formatter.currencyCode = currencyCode
         formatter.locale = .current
+        formatter.minimumFractionDigits = 3
+        formatter.maximumFractionDigits = 3
         return formatter.string(from: NSNumber(value: amount)) ?? "\(currencyCode) \(amount)"
     }
 }
