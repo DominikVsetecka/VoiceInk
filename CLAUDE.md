@@ -33,7 +33,7 @@ und Konfliktstellen stehen in `CUSTOM_CHANGES.md`.
 
 - Setup: `make setup` (bereitet das Whisper-Framework vor)
 - Prerequisite check: `make check`
-- Build: `make build` oder `make local`
+- Build: `make build`, `make local` (Debug) oder `make local-release` (Release)
 - Full check: `./scripts/check`
 - Run: `make run` nach vorhandenem Build
 - Deploy: not configured

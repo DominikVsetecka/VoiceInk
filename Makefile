@@ -3,9 +3,10 @@ DEPS_DIR := $(HOME)/VoiceInk-Dependencies
 WHISPER_CPP_DIR := $(DEPS_DIR)/whisper.cpp
 FRAMEWORK_PATH := $(WHISPER_CPP_DIR)/build-apple/whisper.xcframework
 LOCAL_DERIVED_DATA := $(CURDIR)/.local-build
+LOCAL_CONFIGURATION ?= Debug
 LOCAL_CODESIGN_IDENTITY ?=
 
-.PHONY: all clean whisper setup build local check healthcheck help dev run release release-setup
+.PHONY: all clean whisper setup build local local-release check healthcheck help dev run release release-setup
 
 # Default target
 all: check build
@@ -47,7 +48,7 @@ build: setup
 
 # Build locally with stable Apple Development signing when available.
 local: check setup
-	@echo "Building VoiceInk for local use (no Apple Developer certificate required)..."
+	@echo "Building VoiceInk for local use ($(LOCAL_CONFIGURATION), no Apple Developer certificate required)..."
 	@rm -rf "$(LOCAL_DERIVED_DATA)"
 	@SIGNING_IDENTITY="$(LOCAL_CODESIGN_IDENTITY)"; \
 	if [ -z "$$SIGNING_IDENTITY" ]; then \
@@ -67,7 +68,7 @@ local: check setup
 		SIGNING_REQUIRED=NO; \
 		echo "Using ad-hoc signing (permissions may need approval after rebuilds)"; \
 	fi; \
-	xcodebuild -project VoiceInk.xcodeproj -scheme VoiceInk -configuration Debug \
+	xcodebuild -project VoiceInk.xcodeproj -scheme VoiceInk -configuration $(LOCAL_CONFIGURATION) \
 		-derivedDataPath "$(LOCAL_DERIVED_DATA)" \
 		-xcconfig LocalBuild.xcconfig \
 		CODE_SIGN_IDENTITY="$$SIGNING_IDENTITY" \
@@ -79,7 +80,7 @@ local: check setup
 		-skipMacroValidation \
 		SWIFT_ACTIVE_COMPILATION_CONDITIONS='$$(inherited) LOCAL_BUILD CRYPTO_IN_SWIFTPM' \
 		build
-	@APP_PATH="$(LOCAL_DERIVED_DATA)/Build/Products/Debug/VoiceInk.app" && \
+	@APP_PATH="$(LOCAL_DERIVED_DATA)/Build/Products/$(LOCAL_CONFIGURATION)/VoiceInk.app" && \
 	if [ -d "$$APP_PATH" ]; then \
 		echo "Copying VoiceInk.app to ~/Downloads..."; \
 		rm -rf "$$HOME/Downloads/VoiceInk.app"; \
@@ -94,8 +95,13 @@ local: check setup
 		echo "  - No automatic updates (pull new code and rebuild to update)"; \
 	else \
 		echo "Error: Could not find built VoiceInk.app at $$APP_PATH"; \
-		exit 1; \
+		 exit 1; \
 	fi
+
+# Build an optimized local app while retaining optional VoiceInk Refine support.
+local-release: LOCAL_CONFIGURATION=Release
+local-release: LOCAL_DERIVED_DATA=$(CURDIR)/.local-release-build
+local-release: local
 
 # Run application
 run:
@@ -140,6 +146,7 @@ help:
 	@echo "  setup              Copy whisper XCFramework to VoiceInk project"
 	@echo "  build              Build the VoiceInk Xcode project"
 	@echo "  local              Build locally with stable signing when available"
+	@echo "  local-release      Build an optimized local Release app (Refine retained)"
 	@echo "    LOCAL_CODESIGN_IDENTITY=<SHA or name> overrides automatic Apple Development detection"
 	@echo "  run                Launch the built VoiceInk app"
 	@echo "  dev                Build and run the app (for development)"

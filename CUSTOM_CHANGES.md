@@ -25,7 +25,8 @@ configured as `origin`.
 - `VoiceInk/Custom/Features/PermissionsSettingsView.swift` — permission status
   and macOS System Settings actions available from the Settings tab.
 - `Makefile` remains the local build entry point; its local target contains the
-  minimal Xcode/package settings needed for this Apple-Silicon checkout.
+  minimal Xcode/package settings needed for this Apple-Silicon checkout, and
+  `local-release` provides an optimized local build while retaining Refine.
 - `scripts/check` — runs the prerequisite check and the normal VoiceInk build.
 - `CUSTOM_CHANGES.md` — inventory and compatibility notes for this fork.
 - Project-start operational documentation: `AGENTS.md`, `CLAUDE.md`,
@@ -69,6 +70,9 @@ contain only the minimal integration points required for the new provider.
   can be merged with minimal conflict risk.
 - An upstream change to the `Makefile` local build target may conflict with the
   small local build integration described above.
+- `local-release` intentionally packages the complete app, including the
+  optional VoiceInk Refine XPC service; removing that service is not part of the
+  recommended local build.
 - An upstream change to `ModelProvider`, `CloudProviderRegistry`, or the
   onboarding provider order may conflict with the corresponding small
   integrations above.

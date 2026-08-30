@@ -20,6 +20,7 @@ Ziel: stabile, dokumentierte Fork-Basis.
 - Isolierter `VoiceInk/Custom/`-Bereich
 - Zentrale, deaktivierte Feature-Konfiguration
 - Reproduzierbarer Baseline-Build
+- Optimierter lokaler Release-Build mit erhaltenem VoiceInk Refine
 
 Exit criteria:
 

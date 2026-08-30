@@ -24,6 +24,7 @@ Abnahme. Im ersten Setup wurden keine Laufzeitfeatures verändert.
 - End-to-end tests: not configured
 - Build: `make build`
 - Local Apple-Silicon build: `make local`
+- Optimized local build: `make local-release` (keeps VoiceInk Refine)
 - OpenAI Whisper v1: configure an OpenAI API key, select `OpenAI / Whisper v1`,
   record a short sample, stop recording, and verify the returned transcript.
 - Hybrid preview: enable `Real-time` in the selected mode, keep `Live Text
@@ -77,6 +78,16 @@ kompilieren.
 - When: `./scripts/check`
 - Expected: Upstream-App kompiliert ohne Custom-Laufzeitänderung
 - Evidence: Xcodebuild-Log
+
+### Scenario 1b — Optimized local Release build
+
+- Environment: Apple-Silicon macOS with Xcode and the local Whisper framework
+- Given: VoiceInk Refine remains part of the application bundle
+- When: `make local-release`
+- Expected: an optimized app is copied to `~/Downloads/VoiceInk.app`; the app
+  remains fully functional and the bundle is materially smaller than the Debug
+  build.
+- Evidence: Xcodebuild succeeds and `du -sh` reports the bundle size.
 
 ### Scenario 2 — OpenAI Whisper v1 cloud transcription
 

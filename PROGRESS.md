@@ -22,6 +22,8 @@
   Aufnahme und OpenAI Whisper v1 für das finale Ergebnis.
 - Der lokale Apple-Silicon-Build funktioniert mit `make local` und kopiert die
   signierte App nach `~/Downloads/VoiceInk.app`.
+- `make local-release` erzeugt zusätzlich einen optimierten lokalen Release-
+  Build; VoiceInk Refine bleibt dabei vollständig enthalten.
 - Die globale Shortcut-Registrierung versucht sich nach Berechtigungs- und
   macOS-Lifecycle-Ereignissen automatisch erneut zu verbinden.
 - Berechtigungen können nun in einem eigenen Settings-Tab geprüft und erneut in
@@ -84,6 +86,16 @@
 - Verified: Lokaler Apple-Silicon-Xcode-Build erfolgreich; manuelle Hotkey- und
   Overlay-Abnahme sowie die neue Berechtigungsansicht stehen noch aus.
 - Git: `cd09036` (Hotkey-Recovery).
+
+### 2026-08-30 — Optimierten lokalen Release-Build ergänzt
+
+- Changed: `Makefile` parametrisiert die lokale Konfiguration und bietet den
+  neuen Befehl `make local-release` an.
+- Decision: VoiceInk Refine bleibt im Bundle, auch wenn es aktuell nicht
+  aktiviert ist; der Debug-Build wird für die normale Nutzung durch Release
+  ersetzt.
+- Verified: Separater Release-Vergleich erfolgreich; Bundle-Größe ca. 146 MB
+  statt ca. 205 MB im installierten Debug-Build.
 
 ### 2026-08-29 — Orbit-Projekt und Folge-Tickets angelegt
 
