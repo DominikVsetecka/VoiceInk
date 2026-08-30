@@ -42,11 +42,11 @@ enum CustomUsageCostConfiguration {
         formatter.numberStyle = .currency
         formatter.currencyCode = currencyCode
         formatter.locale = .current
-        formatter.minimumFractionDigits = 3
-        formatter.maximumFractionDigits = 3
+        formatter.minimumFractionDigits = 4
+        formatter.maximumFractionDigits = 4
 
-        if amount > 0, amount < 0.0005 {
-            let minimumVisibleAmount = formatter.string(from: NSNumber(value: 0.001)) ?? "0.001"
+        if amount > 0, amount < 0.00005 {
+            let minimumVisibleAmount = formatter.string(from: NSNumber(value: 0.0001)) ?? "0.0001"
             return "<\(minimumVisibleAmount)"
         }
 
