@@ -1,25 +1,25 @@
-# VoiceInk Fork starten und selbst bauen
+# Start and Build the VoiceInk Fork
 
-Diese Anleitung beschreibt den lokalen Build des persönlichen VoiceInk-Forks
-für Apple-Silicon-Macs.
+This guide describes how to build and run the personal VoiceInk fork locally
+on an Apple Silicon Mac.
 
 Repository: <https://github.com/DominikVsetecka/VoiceInk>
 
-## Voraussetzungen
+## Requirements
 
-- macOS auf einem Apple-Silicon-Mac
-- Xcode aus dem Mac App Store, einmal geöffnet und akzeptiert
+- macOS on an Apple Silicon Mac
+- Xcode from the Mac App Store, opened once and accepted
 - Git
-- Swift und `xcodebuild` (normalerweise mit Xcode vorhanden)
-- CMake, falls das Whisper-Framework lokal neu gebaut werden muss
+- Swift and `xcodebuild` (normally included with Xcode)
+- CMake, if the Whisper framework needs to be rebuilt locally
 
-Optional kann CMake mit Homebrew installiert werden:
+CMake can optionally be installed with Homebrew:
 
 ```bash
 brew install cmake
 ```
 
-## Repository klonen
+## Clone the repository
 
 ```bash
 git clone --branch custom/live_streaming \
@@ -29,40 +29,39 @@ git remote add upstream https://github.com/Beingpax/VoiceInk.git
 git fetch upstream
 ```
 
-Die Remotes haben diese Bedeutung:
+The remotes have these roles:
 
-- `origin` — dein persönlicher Fork
-- `upstream` — das originale VoiceInk-Repository
+- `origin` — your personal fork
+- `upstream` — the original VoiceInk repository
 
-Die eigene Entwicklung findet auf `custom/live_streaming` statt. `main` bleibt
-möglichst nah an `upstream/main`.
+Personal development happens on `custom/live_streaming`. The `main` branch is
+kept as close as possible to `upstream/main`.
 
-## Release-Build für die lokale Nutzung
+## Build a local release
 
-Im Repository ausführen:
+Run this from the repository directory:
 
 ```bash
 make local-release
 ```
 
-Der Befehl:
+This command:
 
-1. prüft die Build-Voraussetzungen,
-2. verwendet oder baut das lokale Whisper-Framework,
-3. baut VoiceInk als optimierte Release-App,
-4. überspringt die nicht benötigte `mlx-swift`-Pluginvalidierung für diesen
-   lokalen macOS-Build,
-5. signiert die eingebetteten Frameworks und XPC-Komponenten konsistent,
-6. kopiert das Ergebnis nach `~/Downloads/VoiceInk.app`.
+1. checks the build prerequisites,
+2. uses or builds the local Whisper framework,
+3. builds VoiceInk as an optimized release app,
+4. skips the unnecessary `mlx-swift` plugin validation for this local macOS
+   build,
+5. signs the embedded frameworks and XPC components consistently, and
+6. copies the result to `~/Downloads/VoiceInk.app`.
 
-Der Signaturschritt ist wichtig: Ohne ihn kann macOS beim Start von
-`whisper.framework` einen Team-ID-Konflikt melden und die App direkt wieder
-beenden.
+The signing step is important. Without it, macOS may report a Team ID conflict
+when loading `whisper.framework` and terminate the app immediately.
 
-## App installieren
+## Install the app
 
-Nach einem erfolgreichen Build die App nach `/Applications` kopieren. Wenn dort
-bereits eine alte Version liegt, muss sie zuerst ersetzt werden:
+After a successful build, copy the app to `/Applications`. If an older version
+is already installed, replace it first:
 
 ```bash
 rm -rf /Applications/VoiceInk.app
@@ -70,41 +69,40 @@ ditto "$HOME/Downloads/VoiceInk.app" /Applications/VoiceInk.app
 xattr -cr /Applications/VoiceInk.app
 ```
 
-Danach starten:
+Then launch it:
 
 ```bash
 open /Applications/VoiceInk.app
 ```
 
-Alternativ kann `VoiceInk.app` im Finder aus `Downloads` nach `Applications`
-gezogen und dort ersetzt werden.
+Alternatively, drag `VoiceInk.app` from `Downloads` to `Applications` in
+Finder and confirm the replacement.
 
-## Erster Start und macOS-Rechte
+## First launch and macOS permissions
 
-Je nach verwendeten Funktionen können diese Rechte erforderlich sein:
+Depending on the features you use, VoiceInk may require:
 
-- Mikrofon — Audioaufnahme
-- Bedienungshilfen — globaler Hotkey und App-Steuerung
-- Automation — Interaktion mit Chrome oder anderen Browsern
-- Bildschirmaufnahme — optionale Kontextfunktionen
+- Microphone — audio recording
+- Accessibility — global hotkeys and app-wide controls
+- Automation — interaction with Chrome or other browsers
+- Screen Recording — optional context features
 
-Die Rechte können später in den VoiceInk-Einstellungen über den
-Berechtigungsbereich geprüft und erneut geöffnet werden. Der komplette
-Onboarding-Prozess muss dafür nicht erneut gestartet werden.
+You can check and reopen these permissions later from the permissions section
+in VoiceInk Settings. You do not need to restart the complete onboarding flow.
 
-## OpenAI und lokale Modelle
+## OpenAI and local models
 
-Der OpenAI-API-Key wird in VoiceInk zur Laufzeit eingegeben und über den
-macOS-Schlüsselbund verwaltet. Er gehört nicht in dieses Repository, in eine
-`README.md` oder in eine `.env`-Datei.
+The OpenAI API key is entered at runtime and stored through the macOS Keychain.
+It must not be committed to this repository, added to `README.md`, or stored in
+an `.env` file.
 
-`whisper-1` ist die cloudbasierte Batch-Transkription für das endgültige
-Ergebnis. Für eine optionale Live-Vorschau kann lokal Parakeet V3 verwendet
-werden. Die bestehende VoiceInk-Streaming-Architektur bleibt dabei erhalten.
+`whisper-1` is the cloud-based batch transcription model used for the final
+transcript. Parakeet V3 can optionally provide a local live preview while you
+are speaking. The existing VoiceInk streaming architecture remains in use.
 
-## App aktualisieren
+## Update the app after changes
 
-Nach Änderungen am Fork erneut bauen und installieren:
+After making changes to the fork, build and install it again:
 
 ```bash
 make local-release
@@ -114,19 +112,19 @@ xattr -cr /Applications/VoiceInk.app
 open /Applications/VoiceInk.app
 ```
 
-`make local-release` ist der empfohlene Weg. Ein direkt aus Xcode kopiertes
-Bundle kann bei den eingebetteten Frameworks die notwendige lokale
-Nachsignierung nicht enthalten.
+`make local-release` is the recommended workflow. Copying a raw app bundle
+directly from Xcode may omit the local re-signing step required by the embedded
+frameworks.
 
-## Änderungen aus dem Original übernehmen
+## Bring changes in from the original repository
 
-Upstream abrufen:
+Fetch the latest upstream state:
 
 ```bash
 git fetch upstream
 ```
 
-Den eigenen `main`-Branch aktualisieren:
+Update your local `main` branch:
 
 ```bash
 git switch main
@@ -134,14 +132,13 @@ git merge --ff-only upstream/main
 git push origin main
 ```
 
-Danach kann die eigene Entwicklung auf `custom/live_streaming` gegen den neuen
-Stand geprüft und bei Bedarf aktualisiert werden. Eigene Dateien liegen
-bevorzugt unter `VoiceInk/Custom/`, damit zukünftige Upstream-Updates möglichst
-wenige Konflikte erzeugen.
+Then review `custom/live_streaming` against the updated upstream base. Fork
+files should preferably live under `VoiceInk/Custom/` so future upstream
+updates create as few conflicts as possible.
 
-## Dokumentation im Fork
+## Fork documentation
 
-- `CUSTOM_CHANGES.md` — eigene Features, Integrationspunkte und Konfliktrisiken
-- `AGENTS.md` und `CLAUDE.md` — Arbeitsregeln für dieses Projekt
-- `TESTING.md` — Test- und Build-Hinweise
-- `ROADMAP.md` — geplante Weiterentwicklung
+- `CUSTOM_CHANGES.md` — custom features, integration points, and conflict risks
+- `AGENTS.md` and `CLAUDE.md` — project working rules
+- `TESTING.md` — testing and build notes
+- `ROADMAP.md` — planned development
