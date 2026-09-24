@@ -27,7 +27,8 @@ struct OpenAIWhisperProvider: CloudProvider {
     }
 
     func transcribe(
-        audioData: Data, fileName: String, apiKey: String, model: String, language: String?, customVocabulary: [String]
+        audioData: Data, fileName: String, apiKey: String, model: String, language: String?, customVocabulary: [String],
+        timeout: TimeInterval
     ) async throws -> String {
         try await OpenAITranscriptionClient.transcribe(
             baseURL: URL(string: "https://api.openai.com")!,

@@ -184,6 +184,30 @@ contain only the minimal integration points required for the new provider.
 5. Keep `CustomFeatureConfiguration` as the single enable/disable boundary and
    preserve the existing path when it is disabled.
 
+## Upstream integration checkpoint
+
+- Release tag: `v2.20` at `173cbb2` (2026-09-19)
+- Integrated upstream: `d7b528a` (`Add Comet browser support`)
+- Integration method: merge into `custom/live_streaming`; backup branch:
+  `backup/custom-live_streaming-before-upstream-2026-09-24`
+- Large upstream source reorganization is now reflected under
+  `VoiceInk/App/`, `VoiceInk/Core/`, `VoiceInk/Features/`, and
+  `VoiceInk/Infrastructure/`. The fork-owned implementation remains under
+  `VoiceInk/Custom/` where possible.
+- The old separate `TranscriptionHistoryView` was removed by upstream;
+  cost overview/section integration now lives in the new History feature views.
+- `ModelProvider` and `CloudProvider` preserve both fork OpenAI Whisper v1 and
+  upstream OpenRouter. `CloudProvider` now receives a request timeout.
+- The upstream global shortcut monitor now handles mouse shortcuts; the fork's
+  permission/lifecycle recovery loop was retained, while the old duplicate
+  middle-click monitor was removed.
+- `Transcription` retains the optional enhancement-provider field. No explicit
+  SwiftData `VersionedSchema`/`SchemaMigrationPlan` exists; existing stores must
+  be smoke-tested before production use.
+- Local Team ID and `LOCAL_BUILD` remain outside normal Xcode build settings;
+  local signing uses `LocalBuild.xcconfig`, `Makefile`, and
+  `VoiceInk.local.entitlements`.
+
 ## Initial upstream baseline
 
 - Upstream branch: `main`

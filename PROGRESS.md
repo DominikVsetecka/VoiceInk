@@ -213,6 +213,29 @@
   editierbar; die Werte bleiben ausdrücklich lokale Schätzungen.
 - Verified: Kosten- und Build-Änderungen im lokalen Release-Build enthalten.
 
+### 2026-09-25 — Upstream 2.20 integriert
+
+- Changed: `upstream/main` bis `d7b528a` per Merge in `custom/live_streaming`
+  integriert; der Release-Checkpoint `v2.20` entspricht `173cbb2` und ist im
+  Merge enthalten.
+- Changed: Upstream-Reorganisation auf `App/Features/Infrastructure/Core`,
+  Dictionary Auto Learn/Import-Export, Quick History, Mouse Shortcuts,
+  OpenRouter, französische Lokalisierung und die neuen Enhancement-Provider
+  wurden übernommen.
+- Preserved: Fork-eigene API-Kosten, OpenAI Whisper v1, hybride Parakeet-/Whisper-
+  Vorschau, Berechtigungs-/Hotkey-Recovery, sofort verfügbare Dashboard-Insights,
+  fokussiertes Overlay und Refine/XPC-Lokalbuild.
+- Migration: `Transcription` behält `aiEnhancementProviderName`; die neue
+  Upstream-Cancel-Semantik erhält Enhancement-Metadaten. Die optionale
+  SwiftData-Erweiterung hat keinen expliziten Schema-Migrationsplan und bleibt
+  vor einem produktiven Datenbanktest besonders zu prüfen.
+- Verified: `./scripts/project-start-check`, `make check`, Debug-Build und
+  `make local-release LOCAL_CODESIGN_IDENTITY=...` erfolgreich.
+- Not verified: manueller App-Start sowie Mikrofon-, Shortcut-, History- und
+  Enhancement-Abnahme in realen Ziel-Apps.
+- Next: ORB-0177 bleibt wegen mlx-swift/CudaBuild-Workaround offen; ORB-0178
+  bleibt für einen eigenen Streaming-Provider offen.
+
 ### 2026-08-29 — Orbit-Projekt und Folge-Tickets angelegt
 
 - Changed: Orbit-Projekt `voiceink_fork` angelegt und die Fork-Basis, das

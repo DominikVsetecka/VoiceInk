@@ -21,5 +21,7 @@
 		<string>com.prakashjoshipax.VoiceInk-spks</string>
 		<string>com.prakashjoshipax.VoiceInk-spki</string>
 	</array>
+	<key>com.apple.security.cs.disable-library-validation</key>
+	<true/>
 </dict>
 </plist>
