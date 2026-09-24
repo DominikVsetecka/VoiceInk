@@ -31,9 +31,15 @@ und Konfliktstellen stehen in `CUSTOM_CHANGES.md`.
 
 ## Lokale Kommandos
 
+- Projektstartprüfung: `./scripts/project-start-check`
 - Setup: `make setup` (bereitet das Whisper-Framework vor)
 - Prerequisite check: `make check`
 - Build: `make build`, `make local` (Debug) oder `make local-release` (Release)
 - Full check: `./scripts/check`
 - Run: `make run` nach vorhandenem Build
 - Deploy: not configured
+
+Vor jedem neuen Build oder größeren Arbeitsschritt zuerst
+`./scripts/project-start-check` ausführen. Der lokale signierte Build läuft über
+`make local` beziehungsweise `make local-release`; persönliche Team-IDs und
+`LOCAL_BUILD` gehören nicht in die normalen Xcode-Projekteinstellungen.

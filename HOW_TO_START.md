@@ -42,6 +42,7 @@ kept as close as possible to `upstream/main`.
 Run this from the repository directory:
 
 ```bash
+./scripts/project-start-check
 make local-release
 ```
 

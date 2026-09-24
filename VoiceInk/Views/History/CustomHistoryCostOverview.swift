@@ -1,7 +1,7 @@
 import SwiftData
 import SwiftUI
 
-/// Fork-owned all-history overview for OpenAI Whisper v1 usage.
+/// Fork-owned all-history overview for transcription and enhancement API usage.
 ///
 /// The view queries the complete history independently from the paginated list,
 /// so the total is not limited by the currently loaded page or search filter.
@@ -16,6 +16,10 @@ struct CustomHistoryCostOverview: View {
     private var usdToEURRate = CustomUsageCostConfiguration.defaultUSDToEURRate
     @AppStorage(CustomUsageCostConfiguration.openAIWhisperUSDPerMinuteKey)
     private var whisperRate = CustomUsageCostConfiguration.defaultOpenAIWhisperUSDPerMinute
+    @AppStorage(CustomUsageCostConfiguration.enhancementInputUSDPerMillionTokensKey)
+    private var enhancementInputRate = CustomUsageCostConfiguration.defaultEnhancementInputUSDPerMillionTokens
+    @AppStorage(CustomUsageCostConfiguration.enhancementOutputUSDPerMillionTokensKey)
+    private var enhancementOutputRate = CustomUsageCostConfiguration.defaultEnhancementOutputUSDPerMillionTokens
 
     private static func allTranscriptionsDescriptor() -> FetchDescriptor<Transcription> {
         FetchDescriptor<Transcription>(
@@ -28,42 +32,62 @@ struct CustomHistoryCostOverview: View {
         _ = currencyCode
         _ = usdToEURRate
         _ = whisperRate
+        _ = enhancementInputRate
+        _ = enhancementOutputRate
         return CustomUsageCostCalculator.summary(for: allTranscriptions)
     }
 
     private var accessibilitySummary: String {
         String(
-            format: String(localized: "Whisper v1 total: %.4f minutes, %@"),
+            format: String(localized: "All API costs: %.4f minutes, %d enhancement tokens, %@"),
             summary.totalMinutes,
+            summary.enhancementTokens,
             summary.formattedCost
         )
     }
 
     var body: some View {
         if CustomFeatureConfiguration.apiUsageCostEnabled, isEnabled {
-            HStack(spacing: 10) {
-                Image(systemName: "chart.bar.fill")
-                    .font(.system(size: 13, weight: .medium))
-                    .foregroundStyle(AppTheme.Text.secondary)
-
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Whisper v1 total")
-                        .font(.system(size: 12, weight: .semibold))
-
-                    Text(String(format: String(localized: "%.4f minutes processed"), summary.totalMinutes))
-                        .font(.system(size: 11, weight: .medium))
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(spacing: 10) {
+                    Image(systemName: "chart.bar.fill")
+                        .font(.system(size: 13, weight: .medium))
                         .foregroundStyle(AppTheme.Text.secondary)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("All API costs")
+                            .font(.system(size: 12, weight: .semibold))
+
+                        Text(String(format: String(localized: "Whisper %.4f min · Enhancement %d tokens"), summary.totalMinutes, summary.enhancementTokens))
+                            .font(.system(size: 11, weight: .medium))
+                            .foregroundStyle(AppTheme.Text.secondary)
+                    }
+
+                    Spacer(minLength: 8)
+
+                    VStack(alignment: .trailing, spacing: 2) {
+                        Text(summary.formattedCost)
+                            .font(.system(size: 13, weight: .semibold))
+
+                        Text("Total · \(currencyCode)")
+                            .font(.system(size: 10, weight: .medium))
+                            .foregroundStyle(AppTheme.Text.secondary)
+                    }
                 }
 
-                Spacer(minLength: 8)
-
-                VStack(alignment: .trailing, spacing: 2) {
-                    Text(summary.formattedCost)
-                        .font(.system(size: 13, weight: .semibold))
-
-                    Text(currencyCode)
-                        .font(.system(size: 10, weight: .medium))
+                if !summary.rows.isEmpty {
+                    Divider()
+                    ForEach(summary.rows) { row in
+                        HStack(spacing: 8) {
+                            Text(row.displayName)
+                                .lineLimit(1)
+                            Spacer(minLength: 8)
+                            Text(CustomUsageCostCalculator.formattedUSD(row.costUSD))
+                                .fontWeight(.medium)
+                        }
+                        .font(.system(size: 11, weight: .regular))
                         .foregroundStyle(AppTheme.Text.secondary)
+                    }
                 }
             }
             .padding(.horizontal, 12)

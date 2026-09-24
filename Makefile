@@ -6,7 +6,7 @@ LOCAL_DERIVED_DATA := $(CURDIR)/.local-build
 LOCAL_CONFIGURATION ?= Debug
 LOCAL_CODESIGN_IDENTITY ?=
 
-.PHONY: all clean whisper setup build local local-release check healthcheck help dev run release release-setup
+.PHONY: all clean whisper setup build local local-release project-start-check check healthcheck help dev run release release-setup
 
 # Default target
 all: check build
@@ -15,7 +15,10 @@ all: check build
 dev: build run
 
 # Prerequisites
-check:
+project-start-check:
+	@./scripts/project-start-check
+
+check: project-start-check
 	@echo "Checking prerequisites..."
 	@command -v git >/dev/null 2>&1 || { echo "git is not installed"; exit 1; }
 	@command -v xcodebuild >/dev/null 2>&1 || { echo "xcodebuild is not installed (need Xcode)"; exit 1; }
@@ -43,7 +46,7 @@ setup: whisper
 	@echo "Whisper framework is ready at $(FRAMEWORK_PATH)"
 	@echo "Please ensure your Xcode project references the framework from this new location."
 
-build: setup
+build: project-start-check setup
 	xcodebuild -project VoiceInk.xcodeproj -scheme VoiceInk -configuration Debug CODE_SIGN_IDENTITY="" build
 
 # Build locally with stable Apple Development signing when available.
@@ -82,10 +85,18 @@ local: check setup
 		build
 	@APP_PATH="$(LOCAL_DERIVED_DATA)/Build/Products/$(LOCAL_CONFIGURATION)/VoiceInk.app" && \
 	if [ -d "$$APP_PATH" ]; then \
-		SIGNING_IDENTITY=$$(security find-identity -v -p codesigning 2>/dev/null | awk '/"Apple Development: / { print $$2; exit }'); \
+		SIGNING_IDENTITY="$(LOCAL_CODESIGN_IDENTITY)"; \
 		if [ -z "$$SIGNING_IDENTITY" ]; then \
-			SIGNING_IDENTITY="-"; \
-			echo "No Apple Development identity found; using ad-hoc signing"; \
+			SIGNING_IDENTITIES=$$(security find-identity -v -p codesigning 2>/dev/null | awk '/"Apple Development: / { print $$2 }'); \
+			SIGNING_IDENTITY_COUNT=$$(printf '%s\n' "$$SIGNING_IDENTITIES" | awk 'NF { count++ } END { print count + 0 }'); \
+			if [ "$$SIGNING_IDENTITY_COUNT" -eq 1 ]; then \
+				SIGNING_IDENTITY=$$(printf '%s\n' "$$SIGNING_IDENTITIES" | awk 'NF { print; exit }'); \
+			else \
+				SIGNING_IDENTITY="-"; \
+			fi; \
+		fi; \
+		if [ "$$SIGNING_IDENTITY" = "-" ]; then \
+			echo "Re-signing embedded local-build code ad hoc"; \
 		else \
 			echo "Re-signing embedded local-build code with: $$SIGNING_IDENTITY"; \
 		fi; \
@@ -134,7 +145,7 @@ run:
 	fi
 
 # Build a signed, notarized DMG and matching local Sparkle Appcast.
-release: whisper
+release: project-start-check whisper
 	@if [ -n "$(NOTES)" ]; then \
 		./scripts/release.sh --notes "$(NOTES)" $(RELEASE_ARGS); \
 	else \
@@ -155,6 +166,7 @@ clean:
 help:
 	@echo "Available targets:"
 	@echo "  check/healthcheck  Check if required CLI tools are installed"
+	@echo "  project-start-check  Validate project docs and local-build isolation"
 	@echo "  whisper            Clone and build whisper.cpp XCFramework"
 	@echo "  setup              Copy whisper XCFramework to VoiceInk project"
 	@echo "  build              Build the VoiceInk Xcode project"

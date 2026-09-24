@@ -46,16 +46,41 @@ struct TranscriptionInfoPanel: View {
                     )
                 }
 
-                if let cost = CustomUsageCostCalculator.formattedCost(for: transcription) {
+            }
+
+            if let breakdown = CustomUsageCostCalculator.formattedBreakdown(for: transcription) {
+                if let transcriptionCost = breakdown.transcription {
                     metadataRow(
                         icon: "dollarsign.circle.fill",
-                        label: "Estimated API Cost",
-                        value: cost
+                        label: "Transcription API Cost",
+                        value: transcriptionCost
                     )
                 }
+
+                if let enhancementCost = breakdown.enhancement {
+                    metadataRow(
+                        icon: "sparkles",
+                        label: "Enhancement API Cost",
+                        value: enhancementCost
+                    )
+                }
+
+                metadataRow(
+                    icon: "sum",
+                    label: "Estimated API Cost Total",
+                    value: breakdown.total
+                )
             }
 
             if let aiModel = transcription.aiEnhancementModelName {
+                if let provider = transcription.aiEnhancementProviderName {
+                    metadataRow(
+                        icon: "network",
+                        label: "Enhancement API",
+                        value: provider
+                    )
+                }
+
                 metadataRow(
                     icon: "sparkles",
                     label: "Enhancement Model",

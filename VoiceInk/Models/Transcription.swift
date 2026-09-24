@@ -20,6 +20,9 @@ final class Transcription {
     var audioFileURL: String?
     var transcriptionModelName: String?
     var aiEnhancementModelName: String?
+    /// The provider used for enhancement. Kept separately from the model name
+    /// because the same model can be reached through multiple APIs.
+    var aiEnhancementProviderName: String?
     var promptName: String?
     var transcriptionDuration: TimeInterval?
     var enhancementDuration: TimeInterval?
@@ -38,6 +41,7 @@ final class Transcription {
         audioFileURL: String? = nil,
         transcriptionModelName: String? = nil,
         aiEnhancementModelName: String? = nil,
+        aiEnhancementProviderName: String? = nil,
         promptName: String? = nil,
         transcriptionDuration: TimeInterval? = nil,
         enhancementDuration: TimeInterval? = nil,
@@ -55,6 +59,7 @@ final class Transcription {
         self.audioFileURL = audioFileURL
         self.transcriptionModelName = transcriptionModelName
         self.aiEnhancementModelName = aiEnhancementModelName
+        self.aiEnhancementProviderName = aiEnhancementProviderName
         self.promptName = promptName
         self.transcriptionDuration = transcriptionDuration
         self.enhancementDuration = enhancementDuration
@@ -81,6 +86,7 @@ final class Transcription {
         transcriptionDuration = nil
         enhancementDuration = nil
         aiEnhancementModelName = nil
+        aiEnhancementProviderName = nil
         promptName = nil
         aiRequestSystemMessage = nil
         aiRequestUserMessage = nil

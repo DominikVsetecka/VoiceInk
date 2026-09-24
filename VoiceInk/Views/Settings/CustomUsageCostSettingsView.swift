@@ -9,6 +9,10 @@ struct CustomUsageCostSettingsView: View {
     private var openAIWhisperUSDPerMinute = CustomUsageCostConfiguration.defaultOpenAIWhisperUSDPerMinute
     @AppStorage(CustomUsageCostConfiguration.usdToEURRateKey)
     private var usdToEURRate = CustomUsageCostConfiguration.defaultUSDToEURRate
+    @AppStorage(CustomUsageCostConfiguration.enhancementInputUSDPerMillionTokensKey)
+    private var enhancementInputUSDPerMillionTokens = CustomUsageCostConfiguration.defaultEnhancementInputUSDPerMillionTokens
+    @AppStorage(CustomUsageCostConfiguration.enhancementOutputUSDPerMillionTokensKey)
+    private var enhancementOutputUSDPerMillionTokens = CustomUsageCostConfiguration.defaultEnhancementOutputUSDPerMillionTokens
 
     var body: some View {
         Form {
@@ -34,10 +38,30 @@ struct CustomUsageCostSettingsView: View {
                     }
                 }
 
+                LabeledContent("Enhancement input price") {
+                    HStack(spacing: 6) {
+                        TextField("0.15", value: $enhancementInputUSDPerMillionTokens, format: .number.precision(.fractionLength(3...6)))
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 90)
+                        Text("USD / 1M tokens")
+                            .foregroundStyle(.secondary)
+                    }
+                }
+
+                LabeledContent("Enhancement output price") {
+                    HStack(spacing: 6) {
+                        TextField("0.60", value: $enhancementOutputUSDPerMillionTokens, format: .number.precision(.fractionLength(3...6)))
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 90)
+                        Text("USD / 1M tokens")
+                            .foregroundStyle(.secondary)
+                    }
+                }
+
             } header: {
                 Text("API Usage Costs")
             } footer: {
-                Text("Costs are local estimates based on the recorded audio duration. Local transcription models are not charged.")
+                Text("Costs are local estimates. Whisper uses audio minutes; API enhancements use estimated input and output tokens. Local models are not charged.")
             }
 
             if currencyCode == "EUR" {

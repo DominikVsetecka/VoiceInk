@@ -9,11 +9,17 @@ enum CustomUsageCostConfiguration {
     static let currencyCodeKey = "CustomUsageCostCurrencyCode"
     static let usdToEURRateKey = "CustomUsageCostUSDToEURRate"
     static let openAIWhisperUSDPerMinuteKey = "CustomUsageCostOpenAIWhisperUSDPerMinute"
+    static let enhancementInputUSDPerMillionTokensKey = "CustomUsageCostEnhancementInputUSDPerMillionTokens"
+    static let enhancementOutputUSDPerMillionTokensKey = "CustomUsageCostEnhancementOutputUSDPerMillionTokens"
 
     static let defaultIsEnabled = true
     static let defaultCurrencyCode = "USD"
     static let defaultUSDToEURRate = 0.92
     static let defaultOpenAIWhisperUSDPerMinute = 0.006
+    // Generic editable defaults. Provider/model-specific billing can change,
+    // so these are estimates rather than invoice-grade historical prices.
+    static let defaultEnhancementInputUSDPerMillionTokens = 0.15
+    static let defaultEnhancementOutputUSDPerMillionTokens = 0.60
 
     static var isEnabled: Bool {
         UserDefaults.standard.object(forKey: isEnabledKey) as? Bool ?? defaultIsEnabled
@@ -32,6 +38,16 @@ enum CustomUsageCostConfiguration {
     static var openAIWhisperUSDPerMinute: Double {
         let value = UserDefaults.standard.double(forKey: openAIWhisperUSDPerMinuteKey)
         return value > 0 ? value : defaultOpenAIWhisperUSDPerMinute
+    }
+
+    static var enhancementInputUSDPerMillionTokens: Double {
+        let value = UserDefaults.standard.double(forKey: enhancementInputUSDPerMillionTokensKey)
+        return value > 0 ? value : defaultEnhancementInputUSDPerMillionTokens
+    }
+
+    static var enhancementOutputUSDPerMillionTokens: Double {
+        let value = UserDefaults.standard.double(forKey: enhancementOutputUSDPerMillionTokensKey)
+        return value > 0 ? value : defaultEnhancementOutputUSDPerMillionTokens
     }
 
     static func formattedCurrency(

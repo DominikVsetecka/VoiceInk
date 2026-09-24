@@ -14,6 +14,7 @@ Abnahme. Im ersten Setup wurden keine Laufzeitfeatures verändert.
 
 ## Commands
 
+- Project-start check: `./scripts/project-start-check`
 - Setup: `make setup`
 - Prerequisites: `make check`
 - Format check: not configured
@@ -24,7 +25,9 @@ Abnahme. Im ersten Setup wurden keine Laufzeitfeatures verändert.
 - End-to-end tests: not configured
 - Build: `make build`
 - Local Apple-Silicon build: `make local`
-- Optimized local build: `make local-release` (keeps VoiceInk Refine)
+- Optimized local build: `make local-release` (keeps VoiceInk Refine); when
+  multiple Apple Development certificates exist, pass
+  `LOCAL_CODESIGN_IDENTITY="<SHA or name>"`
 - OpenAI Whisper v1: configure an OpenAI API key, select `OpenAI / Whisper v1`,
   record a short sample, stop recording, and verify the returned transcript.
 - Hybrid preview: enable `Real-time` in the selected mode, keep `Live Text
@@ -57,10 +60,11 @@ Abnahme. Im ersten Setup wurden keine Laufzeitfeatures verändert.
   that recording still works with the normal-position fallback.
 - Onboarding skip: reset onboarding, select Skip Setup, confirm, and verify that
   the app opens normally and permissions remain manageable from Settings.
-- Fast check: `make check`
+- Fast check: `./scripts/project-start-check` followed by `make check`
 - Full check: `./scripts/check`
 
-`./scripts/check` führt `make check` und anschließend `make build` aus. Der
+`make check` und `./scripts/check` führen zuerst die Projektstartprüfung aus.
+`./scripts/check` führt danach `make check` und anschließend `make build` aus. Der
 Build kann beim ersten Lauf das Whisper-XCFramework aus dem Netzwerk laden und
 kompilieren.
 

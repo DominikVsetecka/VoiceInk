@@ -1,0 +1,58 @@
+#!/bin/sh
+set -eu
+
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+cd "$ROOT"
+
+fail=0
+
+require_file() {
+    if [ ! -f "$1" ]; then
+        echo "ERROR: required project file is missing: $1" >&2
+        fail=1
+    fi
+}
+
+require_file AGENTS.md
+require_file CLAUDE.md
+require_file BUILDING.md
+require_file TESTING.md
+require_file Makefile
+require_file LocalBuild.xcconfig
+require_file VoiceInk/VoiceInk.local.entitlements
+require_file VoiceInk.xcodeproj/project.pbxproj
+
+if ! git rev-parse --show-toplevel >/dev/null 2>&1; then
+    echo "ERROR: project is not inside a Git repository" >&2
+    fail=1
+fi
+
+if ! rg -q '^LOCAL_BUILD$|LOCAL_BUILD' LocalBuild.xcconfig; then
+    echo "ERROR: LocalBuild.xcconfig does not enable LOCAL_BUILD" >&2
+    fail=1
+fi
+
+if ! rg -q '^DEVELOPMENT_TEAM[[:space:]]*=' LocalBuild.xcconfig; then
+    echo "ERROR: LocalBuild.xcconfig must override DEVELOPMENT_TEAM" >&2
+    fail=1
+fi
+
+if rg -q 'SWIFT_ACTIVE_COMPILATION_CONDITIONS[^\n]*LOCAL_BUILD' VoiceInk.xcodeproj/project.pbxproj; then
+    echo "ERROR: LOCAL_BUILD leaked into normal Xcode project settings" >&2
+    echo "       Use make local or make local-release instead." >&2
+    fail=1
+fi
+
+if ! rg -q 'make local-release' BUILDING.md HOW_TO_START.md TESTING.md; then
+    echo "ERROR: local-release workflow is not documented" >&2
+    fail=1
+fi
+
+if [ "$fail" -ne 0 ]; then
+    echo "Project-start check failed." >&2
+    exit 1
+fi
+
+branch=$(git branch --show-current 2>/dev/null || true)
+status_count=$(git status --short | wc -l | tr -d ' ')
+echo "Project-start check passed (branch: ${branch:-detached}, changed files: $status_count)."

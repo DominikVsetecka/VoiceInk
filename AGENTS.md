@@ -31,11 +31,13 @@ persönlichen VoiceInk-Fork.
 ## Vor jeder Änderung
 
 1. Branch und `git status` prüfen.
-2. Vorhandene uncommittete Änderungen als User-Arbeit behandeln.
-3. Betroffene Implementierung und Tests lesen.
-4. Prüfen, ob eine neue Datei, Extension, Protocol-Implementierung oder
+2. `./scripts/project-start-check` ausführen; bei einem Fehler zuerst die
+   Projekt-/Build-Dokumentation und die lokale Build-Konfiguration prüfen.
+3. Vorhandene uncommittete Änderungen als User-Arbeit behandeln.
+4. Betroffene Implementierung und Tests lesen.
+5. Prüfen, ob eine neue Datei, Extension, Protocol-Implementierung oder
    Dependency-Injection-Stelle genügt.
-5. Nach der Änderung den vollständigen Diff und die Build-Warnungen prüfen.
+6. Nach der Änderung den vollständigen Diff und die Build-Warnungen prüfen.
 
 ## Git-Workflow
 
@@ -51,6 +53,9 @@ persönlichen VoiceInk-Fork.
 ## Dokumentation
 
 - `README.md`: Upstream-Projektbeschreibung und Build-Einstieg
+- `BUILDING.md` und `HOW_TO_START.md`: kanonischer lokaler Build- und
+  Installationsworkflow
+- `scripts/project-start-check`: verpflichtende Prüfung vor Build-/Projektstart
 - `CUSTOM_CHANGES.md`: Fork-eigene Dateien, Integrationspunkte und Konfliktrisiken
 - `TESTING.md`: tatsächliche Prüfkommandos und offene manuelle Abnahme
 - `PROGRESS.md`: verifizierter Iststand und Chronologie

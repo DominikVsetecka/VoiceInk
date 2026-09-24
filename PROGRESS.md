@@ -3,7 +3,8 @@
 ## Orbit refs
 
 - Project: `voiceink_fork`
-- Active tickets: `ORB-0177`, `ORB-0178`, `ORB-0180`
+- Active tickets: `ORB-0177`, `ORB-0178`
+- Completed tickets: `ORB-0179`, `ORB-0180`
 - Decisions: none
 
 ## Current state
@@ -39,6 +40,10 @@
   all-history Übersicht mit den bisher verarbeiteten Whisper-v1-Minuten und dem
   Gesamtbetrag in der aktuell gewählten Währung. Die Übersicht fragt die
   vollständige SwiftData-History unabhängig von der Seitenpagination ab.
+- Enhancement-Requests werden in derselben Kostenansicht transparent erfasst:
+  getrennte Transkriptions- und Enhancement-Kosten, Provider/Modell,
+  geschätzte Input-/Output-Tokens und die Gesamtsumme erscheinen pro Eintrag,
+  in den Detailansichten und in den beiden History-Übersichten.
 - Dashboard Insights sind ab dem ersten Start zugänglich. Ohne Daten zeigen die
   vorhandenen Karten leere Zustände; die frühere 30-Minuten-Sperre wurde an
   einem kleinen Dashboard-Integrationspunkt entfernt.
@@ -47,6 +52,9 @@
   Accessibility-Geometrie des Feldes, ist standardmäßig deaktiviert und fällt
   bei nicht unterstützten Apps auf die normale Position zurück. Die Einstellung
   befindet sich unter Settings → Overlay.
+- Der Projektstart ist durch `scripts/project-start-check` abgesichert. Die
+  Prüfung läuft automatisch vor den Makefile-Build-Einstiegen und stellt sicher,
+  dass lokale Build-Einstellungen nicht in die normalen Xcode-Settings gelangen.
 
 ### Open
 
@@ -60,18 +68,19 @@
 
 ## Last verified
 
-- Date: 2026-08-30
-- Commit: `c7d02e2` (`Unlock dashboard insights from first launch`)
+- Date: 2026-09-24
+- Commit: aktueller Commit auf `custom/live_streaming`
 - Branch: `custom/live_streaming`
-- Environment: local Apple-Silicon macOS, Xcode 26.6, Swift 6.3.3
-- Automated: `make local-release` passed; App-Bundle erzeugt, nach
-  `~/Downloads/VoiceInk.app` kopiert und nach `/Applications/VoiceInk.app`
-  installiert; Codesignatur geprüft
+- Environment: local Apple-Silicon macOS, Xcode 27A266a, Swift 6.3.3
+- Automated: `./scripts/project-start-check`, `make check` und ein
+  `make local-release` mit expliziter lokaler Apple-Development-Signatur
+  passed; App-Bundle erzeugt und nach `~/Downloads/VoiceInk.app` kopiert.
+  Die strikte CLI-Verifikation meldet für das lokale Development-Zertifikat
+  `CSSMERR_TP_NOT_TRUSTED`.
 - Manual: none
 - Not verified: App launch, audio, permissions, device/user acceptance
 - Not verified: focused-overlay behavior in Chrome, TextEdit, and apps without
   an exposed editable Accessibility element
-- Git status: clean after the all-history cost overview changes
 
 ## Log
 
@@ -179,6 +188,31 @@
   kopiert.
 - Not verified: manuelle Abnahme in einzelnen Ziel-Apps steht noch aus.
 
+### 2026-09-24 — Lokalen Build-Start abgesichert
+
+- Changed: Persönliche Team-ID und `LOCAL_BUILD` aus den normalen Xcode-
+  Debug-/Release-Settings entfernt; lokale Signierung bleibt in
+  `LocalBuild.xcconfig` und `Makefile`.
+- Changed: `scripts/project-start-check` ergänzt und in den Makefile-/Build-
+  Workflow sowie in `AGENTS.md`, `CLAUDE.md`, `BUILDING.md` und `TESTING.md`
+  dokumentiert.
+- Changed: Das Re-Signing verwendet jetzt garantiert dieselbe explizit
+  ausgewählte Zertifikats-ID wie der eigentliche Build.
+- Verified: `./scripts/project-start-check`, `make check` und ein
+  `make local-release` mit expliziter lokaler Apple-Development-Signatur
+  erfolgreich; signierte App nach `~/Downloads/VoiceInk.app` kopiert.
+- Warnings: Xcode meldet bestehende Swift-6-/Deprecation-Warnungen; keine neuen
+  Build-Fehler.
+
+### 2026-09-24 — Enhancement-Kosten transparent gemacht
+
+- Changed: API-Kosten zeigen jetzt getrennte Transkriptions- und
+  Enhancement-Werte inklusive Provider/Modell, Token-Schätzung und Summe pro
+  Eintrag sowie in beiden History-Übersichten und den Detailansichten.
+- Changed: Input-/Output-Preise für Enhancement sind in den API-Costs-Settings
+  editierbar; die Werte bleiben ausdrücklich lokale Schätzungen.
+- Verified: Kosten- und Build-Änderungen im lokalen Release-Build enthalten.
+
 ### 2026-08-29 — Orbit-Projekt und Folge-Tickets angelegt
 
 - Changed: Orbit-Projekt `voiceink_fork` angelegt und die Fork-Basis, das
@@ -188,5 +222,5 @@
 - Verified: Orbit-JSON und Events validiert.
 - Not verified: CudaBuild-Workaround und Dependency-Update noch offen.
 - Git: keine Repository-Änderung in diesem Schritt.
-- Orbit: `ORB-0176` done, `ORB-0177` und `ORB-0178` ready
+- Orbit: `ORB-0176`, `ORB-0179` und `ORB-0180` done; `ORB-0177` und `ORB-0178` ready
 - Next: `ORB-0177` bearbeiten, danach `ORB-0178`.

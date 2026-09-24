@@ -14,6 +14,10 @@ struct HistoryAnalysisPanelView: View {
     private var openAIWhisperUSDPerMinute = CustomUsageCostConfiguration.defaultOpenAIWhisperUSDPerMinute
     @AppStorage(CustomUsageCostConfiguration.usdToEURRateKey)
     private var usdToEURRate = CustomUsageCostConfiguration.defaultUSDToEURRate
+    @AppStorage(CustomUsageCostConfiguration.enhancementInputUSDPerMillionTokensKey)
+    private var enhancementInputRate = CustomUsageCostConfiguration.defaultEnhancementInputUSDPerMillionTokens
+    @AppStorage(CustomUsageCostConfiguration.enhancementOutputUSDPerMillionTokensKey)
+    private var enhancementOutputRate = CustomUsageCostConfiguration.defaultEnhancementOutputUSDPerMillionTokens
 
     init(transcriptions: [Transcription], onClose: @escaping () -> Void) {
         self.transcriptions = transcriptions
@@ -71,7 +75,7 @@ struct HistoryAnalysisPanelView: View {
                 VStack(alignment: .leading, spacing: 24) {
                     if CustomFeatureConfiguration.apiUsageCostEnabled && isCostAnalysisEnabled {
                         CustomHistoryCostSection(summary: costSummary)
-                            .id("\(costCurrencyCode)-\(openAIWhisperUSDPerMinute)-\(usdToEURRate)")
+                            .id("\(costCurrencyCode)-\(openAIWhisperUSDPerMinute)-\(enhancementInputRate)-\(enhancementOutputRate)-\(usdToEURRate)")
                     }
 
                     HistoryPerformanceSection(

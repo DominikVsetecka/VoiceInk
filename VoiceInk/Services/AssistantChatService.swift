@@ -65,6 +65,7 @@ final class AssistantChatService {
     ) {
         transcription.enhancedText = response.text
         transcription.aiEnhancementModelName = modelName ?? provider.defaultModel
+        transcription.aiEnhancementProviderName = provider.rawValue
         transcription.promptName = promptName
         transcription.enhancementDuration = response.duration
         transcription.aiRequestSystemMessage = response.systemPrompt
@@ -86,6 +87,7 @@ final class AssistantChatService {
             duration: 0,
             enhancedText: response.text,
             aiEnhancementModelName: modelName ?? provider.defaultModel,
+            aiEnhancementProviderName: provider.rawValue,
             promptName: promptName,
             enhancementDuration: response.duration,
             aiRequestSystemMessage: response.systemPrompt,

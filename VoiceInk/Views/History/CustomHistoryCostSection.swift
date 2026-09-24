@@ -31,18 +31,34 @@ struct CustomHistoryCostSection: View {
                 }
                 .font(.system(size: 12, weight: .medium))
 
+                HStack(spacing: 12) {
+                    Text("Whisper: \(summary.formattedTranscriptionCost)")
+                    Text("Enhancement: \(summary.formattedEnhancementCost)")
+                    Spacer()
+                    Text("\(summary.enhancementTokens.formatted()) tokens")
+                }
+                .font(.system(size: 12, weight: .medium))
+                .foregroundStyle(AppTheme.Text.secondary)
+
                 VStack(spacing: 8) {
                     ForEach(summary.rows) { row in
                         HStack {
-                            Text(row.modelName)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(row.displayName)
+                                Text(row.kind == .transcription ? "Transcription API" : "Enhancement API")
+                                    .font(.system(size: 10, weight: .regular))
+                                    .foregroundStyle(AppTheme.Text.secondary)
+                            }
                             Spacer()
-                            Text(String(format: String(localized: "%.1f min"), row.minutes))
-                                .foregroundStyle(AppTheme.Text.secondary)
+                            if row.kind == .transcription {
+                                Text(String(format: String(localized: "%.1f min"), row.minutes))
+                                    .foregroundStyle(AppTheme.Text.secondary)
+                            } else {
+                                Text("\(row.tokens.formatted()) tokens")
+                                    .foregroundStyle(AppTheme.Text.secondary)
+                            }
                             Text(
-                                CustomUsageCostConfiguration.formattedCurrency(
-                                    row.costUSD * (summary.currencyCode == "EUR" ? CustomUsageCostConfiguration.usdToEURRate : 1),
-                                    currencyCode: summary.currencyCode
-                                )
+                                CustomUsageCostCalculator.formattedUSD(row.costUSD)
                             )
                             .frame(minWidth: 58, alignment: .trailing)
                         }

@@ -13,14 +13,17 @@ configured as `origin`.
   `OpenAITranscriptionClient`.
 - It can be disabled through `CustomFeatureConfiguration.openAIWhisperEnabled`.
 - Local estimated API usage costs are shown for supported cloud transcription
-  models, currently OpenAI Whisper v1. The estimate uses the recorded audio
-  duration and an editable per-minute rate; local models are not charged.
-- Costs are visible per history entry, in the transcription details, as a
-  selected-entry total in the existing analysis panel, and as an always-visible
-  all-history overview at the top of both the main-window history and the
-  separate History window. The overview shows total Whisper v1 minutes and the
-  total in the currently selected USD/EUR display currency. Cost values use
-  four decimal places so the per-second Whisper v1 value of `0.0001 USD`
+  models, currently OpenAI Whisper v1, and for cloud AI enhancement requests.
+  Whisper uses recorded audio duration; enhancement uses estimated input and
+  output tokens. Both rates are editable because provider/model pricing can
+  change, and local models are not charged.
+- Costs are visible per history entry, with separate transcription,
+  enhancement, and total values in the transcription details, as a selected
+  history breakdown in the existing analysis panel, and as an always-visible
+  all-history breakdown at the top of both the main-window history and the
+  separate History window. The selected breakdown lists every provider/model
+  and the combined total in the current USD/EUR display currency. Cost values
+  use four decimal places so the per-second Whisper v1 value of `0.0001 USD`
   remains visible; amounts below `0.0001` are shown as `<0.0001`. The complete
   history can still be selected through the existing `Select All` action.
 - Dashboard Insights are available from the first launch. When there is not yet
@@ -45,14 +48,15 @@ configured as `origin`.
 - `VoiceInk/Custom/Usage/CustomUsageCostConfiguration.swift` — user-configurable
   pricing, currency, and display settings for cost estimates.
 - `VoiceInk/Custom/Usage/CustomUsageCostCalculator.swift` — calculates local
-  per-recording and aggregate estimates without changing the SwiftData schema.
+  per-recording and aggregate transcription/enhancement estimates.
 - `VoiceInk/Views/History/CustomHistoryCostOverview.swift` — queries the complete
-  history and renders the total Whisper v1 minutes and cost overview.
+  history and renders the combined transcription/enhancement cost overview.
 - `VoiceInk/Views/History/CustomHistoryCostSection.swift` — cost summary for
   selected history entries.
 - `VoiceInk/Views/Settings/CustomUsageCostSettingsView.swift` — API cost settings
-  for enabling the display, changing the rate, and choosing USD/EUR; the EUR
-  view includes an explicit `1 USD = … EUR` input, reset action, and example.
+  for enabling the display, changing Whisper and enhancement token rates, and
+  choosing USD/EUR; the EUR view includes an explicit `1 USD = … EUR` input,
+  reset action, and example.
 - `VoiceInk/Custom/Features/PermissionsSettingsView.swift` — permission status
   and macOS System Settings actions available from the Settings tab.
 - `VoiceInk/Custom/Configuration/CustomOverlayConfiguration.swift` — user

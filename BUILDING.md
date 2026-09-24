@@ -9,11 +9,21 @@
 ## Local Build
 
 ```bash
-git clone https://github.com/Beingpax/VoiceInk.git
-cd VoiceInk
+git clone --branch custom/live_streaming \
+  https://github.com/DominikVsetecka/VoiceInk.git voiceink_fork
+cd voiceink_fork
+./scripts/project-start-check
 make local
 open ~/Downloads/VoiceInk.app
 ```
+
+The project-start check verifies that the local-build configuration and
+documentation are present and that local-only settings have not leaked into the
+normal Xcode project settings.
+
+All Makefile build entry points run this check automatically. Running it
+explicitly at the beginning of a new Claude or Codex session makes the expected
+project state visible before any implementation or build work starts.
 
 `make local` prepares `whisper.xcframework` in `~/VoiceInk-Dependencies`, builds in `.local-build`, and copies `VoiceInk.app` to `~/Downloads`.
 
@@ -32,6 +42,14 @@ make local LOCAL_CODESIGN_IDENTITY=-
 ```
 
 Local builds do not include iCloud dictionary sync or automatic updates. Ad-hoc builds may require macOS permissions again after rebuilding. Normal project Debug and Release settings are unchanged.
+
+If more than one Apple Development certificate is installed, choose the
+certificate explicitly so embedded frameworks and XPC components receive the
+same signature:
+
+```bash
+make local-release LOCAL_CODESIGN_IDENTITY="<SHA or name>"
+```
 
 ## Other Commands
 

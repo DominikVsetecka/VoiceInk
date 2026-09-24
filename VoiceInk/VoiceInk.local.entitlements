@@ -16,5 +16,10 @@
 	<true/>
 	<key>com.apple.security.screen-capture</key>
 	<true/>
+	<key>com.apple.security.temporary-exception.mach-lookup.global-name</key>
+	<array>
+		<string>com.prakashjoshipax.VoiceInk-spks</string>
+		<string>com.prakashjoshipax.VoiceInk-spki</string>
+	</array>
 </dict>
 </plist>
